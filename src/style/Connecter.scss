@@ -1,0 +1,197 @@
+@import 'Variables.scss';
+
+
+.SectionCon{
+
+   //margin-bottom: 40px;
+
+    .InsFormaC{ 
+
+        
+         background-color: $greyfon;
+         width: 700px; /* La largeur de l’élément */
+         height: 500px; /* La hauteur de l’élément */
+        //background-color: red;
+        /* Centrer verticalement et horizontalement */
+         position: absolute;
+         //top: 10%;
+          left: 28%;
+          //margin-top: 1%;
+          //margin: -25px 0 0 -25px;
+         //margin-left: auto;
+         //margin-right: auto;
+         //justify-content: center;
+         //align-items: center;
+        margin-top: 100px;
+        margin-right: 10px;
+        margin-bottom: 100px;
+        margin-left: 10px;
+        border: 1px solid #CCC;
+        box-shadow: 1px 1px 5px #CCC;
+        border-radius: 3px;
+        padding: 10px;
+
+            .titleCon{
+                color: $verte;
+                font-size: $titleLg; 
+                font-weight: normal;
+                //margin-bottom: 30px;
+                text-align: center;
+                //margin-top: 5%;
+                margin-bottom: 10px;
+
+                .footerLogo2{
+
+                    width: 70px;
+            
+                }
+
+            }
+
+            p{
+                //background-color: red;
+                width: 670px;
+                font-size: 20px;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .FormCon{
+                
+                //background-color: red;
+                width: 670px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 5%;
+
+                
+                
+               
+                .ConContainer{
+
+                    .pageS{
+
+                        position: relative;
+                        height: 120px;
+                        //background-color: red;
+                        .formules{
+
+
+
+                        
+
+                            .labs{
+    
+                                 /*display: flex;
+                                 flex-direction: row;
+                                 justify-content: flex-end;
+                                 text-align: right;
+                                 width: 400px;
+                                 line-height: 26px;
+                                //margin-bottom: 10px;*/
+                                display: inline-block;
+                                width:  200px;
+                                text-align: right;
+                                margin-bottom: 10px;
+                                line-height: 40px;
+                                
+    
+                                
+                            }
+    
+                             .conts{
+                                width: 340px;
+                                height: 32px;
+                                flex: 0 0 200px;
+                                margin-left: 10px;
+                                margin-bottom: 8px;
+                                box-shadow: 1px 1px 5px #CCC;
+                                border: 1px solid #CCC;
+                                border-radius: 2px;
+                                border: none;
+                               
+                            }
+                        }
+                    }
+                    
+                  
+
+                    
+
+
+                   
+            
+                    .Btns{
+                        
+                       
+                        position: relative;
+                        left: 250px;
+                        
+                        .btnss{
+
+                            height:80px;
+
+                            button{
+                                color: $white;
+                                background-color: $verte;
+                                border-radius: 3px;
+                                width: 200px;
+                                height: 50px;
+                                font-weight: bold;
+                                border: none;
+                                //margin-bottom: 30px;
+                                border-radius: 2px;
+
+                        }
+
+                        
+
+                        
+                          
+                            
+
+                           
+
+                           
+
+                            //margin: 0;
+                            //position: absolute;
+                            
+                            //-ms-transform: translateY(-50%);
+                            //transform: translateY(-50%);
+                
+                        }
+
+                        .InsP{
+                            //background-color: red;
+                            position: absolute;
+                            right: 400px;
+                            width: 350px;
+                            //left: 500px;
+                            
+                        }
+
+                    }
+                    
+
+                    
+                   
+
+                        
+                    
+
+                }
+
+
+
+            }
+
+            
+
+
+            
+    }
+            
+    
+}

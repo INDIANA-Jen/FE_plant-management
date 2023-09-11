@@ -1,0 +1,701 @@
+@import 'Variables.scss';
+@import 'Commun.scss';
+
+.sectionContainer{
+    margin-top: $paddingSectionLg !important;
+    display:flex;
+    .sectionImage{
+        padding: 3%;
+        width:50%;
+        overflow:hidden;
+        img{
+            width:100%;
+            height:100%;
+            object-fit: contain;
+            overflow:hidden;
+        }
+    }
+    .sectionText{
+        padding: 3%;
+        width:50%;
+        .paragraph{
+            margin-top: $lineheightLg;
+        }
+        li{
+            font-size: $fontsizeLg;
+            color: $grey;
+            line-height:$lineheightLg;
+            margin:20px 0px;
+            margin-left:17px !important;
+
+            .openFonc{
+                text-decoration: none;
+                color: $verte;    
+            }
+            .openFonc:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+
+//Responsive
+//Phone: mobile
+@include mediaXs{
+    .sectionContainer{
+        display:block;
+        position:relative; //test
+
+        .sectionImage{
+            display:none; //OU METTRE LES IMAGES
+            position:absolute;
+            top:0;
+        }
+        .sectionText, .sectionImage{
+            width:100%;
+            //margin: 0 10px;
+        }
+        .sectionText{
+            padding: 0 8px;
+            li{
+                font-size: $fontsizeSm;
+                line-height: $lineheightSm;
+            }
+        }
+    }
+    .container-telechargement{
+        .titleTelechargement{
+            padding-left:8px !important;
+        }
+        .sm-container{
+            display:block;
+            .sm-paragraph{
+                width: 100%;
+            }
+        }
+    }
+}
+
+//Ecran tablette eg:iPad Mini
+@include mediaSm{
+    .sectionContainer{
+        .sectionText{
+            width:50%;
+            li{
+                font-size: $fontsizeSm;
+                line-height: $lineheightSm;
+            }
+        }
+        .sectionImage{
+            height:50%;
+            margin:auto;
+            //display:none;
+        }
+    }  
+}
+
+//Ecran medium : iPad Air
+@include mediaMd{
+    .sectionContainer{
+        .sectionText{
+            width:50%;
+            li{
+                font-size: $fontsizeMd;
+                line-height: $lineheightMd;
+            }
+        }
+        .sectionImage{
+            margin:auto;
+        }
+    }
+}
+
+//Ecran large
+@include mediaXl{
+    .sectionContainer{
+        .sectionText{
+            width:50%;
+            li{
+                font-size: $fontsizeXl;
+                line-height: $lineheightXl;
+            }
+        }
+        .sectionImage{
+            margin:auto;
+        }
+    }
+}
+
+@include mediaXxl{
+    .sectionContainer{
+        .sectionText{
+            width:50%;
+            li{
+                font-size: $fontsizeXxl;
+                line-height: $lineheightXxl;
+            }
+        }
+        .sectionImage{
+            img{
+                width:65%;
+                height:65%;
+                object-fit: contain;
+            }
+        }      
+    }
+}
+
+.fonc{
+
+    .titlefon{
+        color: $verte;
+        font-size: $titleLg; /*TBD*/
+        font-weight: normal;
+        margin-bottom: 100px; // pour les espaces entre les fonction aussi
+        text-align: center;
+        //background-color: red;
+    }
+
+    .SectionContFonc{
+        display: flex;
+        justify-content: space-around;
+        //background-color: red;
+        padding-left: 100px;
+        padding-right: 100px;
+        margin-top: 3%;
+       
+        .fonction{  
+            width: 200px;
+            padding: 5px 0;
+            margin: 5px;
+            text-align: center;
+            background-color: $greyfon;
+            margin-bottom: 50px;
+            box-shadow: 1px 1px 5px #CCC; //permet de donne l'effet de fond de chaque box
+            border: 1px solid #CCC;
+            .titreIcon{
+                p{
+                    font-size: 18px;
+                    text-align: center;
+                }
+            }            
+        }
+    }
+}
+
+.sectiondemo{
+
+    background-color: $greyfon;
+
+    .titleDemo{
+
+        color: $verte;
+        font-size: $titleLg; /*TBD*/
+        font-weight: normal;
+        margin-bottom: 20px;
+        text-align: center;
+        margin-top: 5%;
+
+
+    }
+
+    .video-container {
+        position: relative;
+        width:95%;
+        height:550px;
+        margin:auto;
+        
+    
+        .videoDemo{
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        }
+    }
+
+}
+
+.Partenaire {
+
+    margin-top: 4%; // pour les espacement entre chauqe section
+   
+    //background-color: red;
+
+    .titlePartenaire{
+        color: $verte;
+        font-size: $titleLg; 
+        font-weight: normal;
+        margin-bottom: 20px;
+        text-align: center;
+        margin-top: 5%;
+    }
+    .ContenerPart{
+        
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-between /* Utilisez une autre valeur pour voir le résultat */;
+        min-height: 100px; //on peut l'utiliser pour les espacement entre les section aussi 
+        //background-color: #1c87c9;
+        width: 800px;
+        height: 250px;
+        justify-content: center; // centrer les contenus 
+        margin-left: auto; //centrer les contenu 
+        margin-right: auto; // centrer les conetnu
+        margin-bottom: 30px; // espace en bas du contenu 
+
+        .ToutPartenaire{
+            width: 144px;
+            padding: 5px 0;
+            margin: 8px;
+            //background-color: lightgrey;
+            text-align: center;
+            .perte{
+                width: 140px;
+                display: flex;
+            &:hover{
+                    cursor: pointer;
+                    color: $verte;
+                }
+                
+            }     
+        }
+    }
+}
+
+.Partenaire {
+
+    margin-top: 4%; // pour les espacement entre chauqe section
+   
+    //background-color: red;
+
+    .titlePartenaire{
+        color: $verte;
+        font-size: $titleLg; 
+        font-weight: normal;
+        margin-bottom: 20px;
+        text-align: center;
+        margin-top: 5%;
+    }
+    .ContenerPart{
+        
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-between /* Utilisez une autre valeur pour voir le résultat */;
+        min-height: 100px; //on peut l'utiliser pour les espacement entre les section aussi 
+        //background-color: #1c87c9;
+        width: 800px;
+        height: 250px;
+        justify-content: center; // centrer les contenus 
+        margin-left: auto; //centrer les contenu 
+        margin-right: auto; // centrer les conetnu
+        margin-bottom: 30px; // espace en bas du contenu 
+
+        .ToutPartenaire{
+            width: 144px;
+            padding: 5px 0;
+            margin: 8px;
+            //background-color: lightgrey;
+            text-align: center;
+
+            .perte{
+                width: 140px;
+                display: flex;
+
+                &:hover{
+                    cursor: pointer;
+                    color: $verte;
+                }
+            }                      
+        }
+    }
+}
+
+.SectionContact {
+
+    background-color: $greyfon;
+    margin-bottom: 0px;
+    
+    
+
+
+    .titleContact{
+        
+        color: $verte;
+        font-size: $titleLg; 
+        font-weight: normal;
+        margin-bottom: 30px;
+        text-align: center;
+        margin-top: 5%;
+
+
+    }
+
+    .FormContact{
+
+        
+        display: flex;
+        justify-content: center;
+
+
+        .ContactContainer{
+
+             
+            //background-color: red;
+            box-sizing: border-box;
+            padding: 1.5% 3%;
+            width: 600px;
+           
+        }
+
+        form div{
+
+            position: relative;
+            //background-color: $verte;
+            //width: 450px;
+            //height: 200px;   
+        }
+
+        textarea{
+           /* width: 300px;
+            height: 200px;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;*/
+
+            width: 500px;
+            height: 170px;
+            border-radius: 2px;
+            border: 1px solid #CCC;
+            padding: 8px;
+            font-weight: 200;
+            font-size: 15px;
+            font-family: Verdana;
+            box-shadow: 1px 1px 5px #CCC;
+            margin-bottom: 20px;
+
+        }
+
+        .TextContact{
+           //background-color: yellow;
+           width: 500px;
+          
+
+            .titreContact{
+                margin-bottom: 80px;
+
+                p{
+                    font-size: 17px;
+                    
+                }
+
+            }
+
+
+            .contact-info{
+
+                //background-color: red;
+                width: 500px;
+                //height: 300px;
+               
+
+                p{
+                    font-size: 17px;
+                }
+                
+            }
+        }
+
+        input, label {
+            display:block; //qui permet que le label en haut de input
+            //margin-bottom: 5px;
+            width: 500px;
+            height: 38px;
+            border-radius: 2px;
+            border: none;
+            
+        
+        }
+
+        label{
+            font-size: 15px;
+        }
+
+        input{
+            
+            margin-bottom: 8px;
+            box-shadow: 1px 1px 5px #CCC;
+            border: 1px solid #CCC;
+        }
+
+
+        button{
+            color: $white;
+            background-color: $verte;
+            border-radius: 3px;
+            width: 500px;
+            height: 50px;
+            font-weight: bold;
+            border: none;
+            margin-bottom: 20px;
+            border-radius: 2px;
+          
+
+        }
+
+       
+        
+
+        /*form div:nth-child(1), form div:nth-child(2){
+                width: 45%;
+                background-color: blue;
+            }*/
+        
+        
+          
+
+    }
+
+   
+    
+    
+}
+
+.reseau{
+
+   
+   
+    background-color: $verte;
+    //display: flex;    
+    //align-items: center;
+    //justify-content: center;
+   // width: 200px; 
+   
+    height: 200px; 
+    display: flex;    
+    align-items: center;
+    justify-content: center;
+    
+    height: 200px; 
+    
+    
+ 
+   
+   
+
+    .titreReseau {
+
+        position: absolute;
+        margin-bottom: 100px;
+       
+        
+
+        p{
+            
+            font-size: 18px;
+            margin-bottom: 20px;
+            //background-color: red;
+            
+            
+           
+        }
+
+        
+
+
+
+    }
+
+
+
+    .iconResau{
+
+       display: flex;
+       position: absolute;
+       justify-content: space-between;
+       //background-color: red;
+       width: 120px;
+
+       //margin-bottom: 0px;
+
+       
+        
+        
+           /* writing-mode: horizontal-tb;
+            display: inline-block;
+            //justify-content: space-between;
+            width: 60px;*/
+            
+            
+            
+
+    
+        /*
+        display: flex;
+  justify-content: space-between;
+  max-width: 400px;
+  margin: 0 auto;
+  background: #A0C5E8;
+  padding: 10px 0;*/
+        
+        
+
+        
+       
+
+    }
+}
+
+
+    
+        
+
+
+    
+
+    
+
+    
+
+
+.mention{ 
+    //position: relative;
+    /*body .active-modal {
+        overflow-y: hidden;
+    }*/
+
+    p{
+        /*background-color: aquamarine;*/
+        text-align: center;
+        padding: 10px 0px ;
+        
+    }
+
+    i{
+        font-size: 17px;
+    }
+
+    .openFonction{
+        text-decoration: none;
+        color: $verte;     
+    }
+    .openFonction:hover{
+        cursor: pointer;
+    
+    }  
+
+    .modalment, .overlay {
+        z-index: 999;
+        width: 100vw;
+        //height: 100vh;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        right: 0;
+        //bottom: 70;
+        position: fixed;
+        overflow: hidden;
+        background: rgba(255, 254, 254, 0.8);
+
+        .PopUp{
+            z-index: 99999;
+            position: absolute;
+            height: 600px;
+            top:20px;
+            left:0;
+            right:0;
+            margin-left: auto;
+            margin-right: auto;
+            background: $white;
+            box-shadow: 0px 0px 5px 5px grey;
+            width:80%;
+            border-radius:5px;
+            overflow-y: scroll;
+
+            .close-modal{
+                z-index:9999;
+                position:absolute;
+                top:10px;
+                right:10px;
+                background:none;
+                font-size:18px;
+                padding:5px 10px;
+                &:hover{
+                    cursor:pointer;
+                    color: $white;
+                    background: $verte;
+                    border:none;
+                }
+            }
+        
+        
+        }
+
+        .title {
+            text-align: center;
+            margin-left: 4%;
+            margin-top: 55px !important;
+            margin-bottom: 40px !important;
+
+            .logoMent{
+                position: absolute;
+                left: 8px;
+                top: 10px;
+            }
+        }
+        .lightTitle{
+            text-align: left;
+            margin-left: 3%;
+            margin-top: 30px !important;
+            font-size: 30px;
+            color: black;
+            margin-bottom: 3px;
+        }
+
+        .mentionContet{
+            .mentcont{
+             text-align: left;
+             margin-left: 4%;
+             margin-right: 4%;
+            
+             
+            }
+            .sousTitre{
+                text-align: left;
+                margin-left: 4%;
+                margin-top: 20px !important;
+                font-size: 20px;
+                color: black;
+                margin-bottom: 4px;
+
+            }
+        }
+
+    }
+}
+.footerRow2{
+    position: relative;
+     p {
+         
+         text-align:center;
+         padding: 10px 0px;
+         /*display: inline-block;*/
+
+         i{
+            font-size: 17px;
+         }
+        
+     }
+     /*position du logo*/
+     .footerLogo{
+         vertical-align: text-bottom;
+         height: 30px;
+     }
+
+ }

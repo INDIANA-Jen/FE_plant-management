@@ -1,0 +1,1169 @@
+@import 'Commun.scss';
+@import "Variables.scss";
+
+.profil {
+
+    //background-color: red;
+    .casprofil {
+        position: absolute;
+        // background-color: red;
+        left: 450px;
+        right: 0;
+        top: 0; //permet de tiré le contenu en haut 
+        height: 100vh;
+
+        .titleprofil {
+            font-size: 30px;
+            color: black;
+        }
+
+        .contenerBtn {
+
+            display: flex;
+            //align-items: center;
+            gap: 10px;
+            //background-color: blue;
+            width: 48%;
+            margin-left: 1px;
+            //height: 20px;
+            //left: 100px;
+            margin-top: 520px; // tire le contenu vers le bas 
+
+
+            .Btnp {
+
+                //background-color: blue;
+                width: 200px;
+                position: relative;
+                display: flex;
+                left: 20px;
+                height: 50px;
+
+
+                .btnp {
+
+
+                    button {
+                        color: $white;
+                        background-color: $verte;
+                        border-radius: 3px;
+                        width: 200px;
+                        height: 45px;
+                        font-weight: bold;
+                        border: none;
+                        //margin-bottom: 30px;
+                        border-radius: 2px;
+
+                    }
+                }
+
+            }
+
+            .Btnpl {
+
+
+                width: 200px;
+                position: relative;
+                display: flex;
+                left: 100px;
+                height: 50px;
+
+                .btnpl {
+
+
+                    button {
+                        color: $white;
+                        background-color: $verte;
+                        border-radius: 3px;
+                        width: 200px;
+                        height: 45px;
+                        font-weight: bold;
+                        border: none;
+                        //margin-bottom: 30px;
+                        border-radius: 2px;
+
+                    }
+                }
+
+
+            }
+        }
+    }
+
+    .casemesplantes {
+
+        position: absolute;
+        // background-color: red;
+        left: 450px;
+        right: 0;
+        top: 0; //permet de tiré le contenu en haut 
+        height: 100vh;
+
+        .titlemesplantes {
+            color: black;
+
+        }
+
+
+        .plant-list {
+            position: absolute;
+            left: 0px;
+            right: 0;
+            height: 100vh;
+            // overflow-y: auto;
+            /* Enable vertical scrolling when needed */
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow items to wrap to the next line */
+            justify-content: flex-start;
+            /* Start items from the left */
+            gap: 20px;
+            /* Adjust the gap between items */
+            padding: 20px;
+            /* Add padding as needed */
+        }
+
+        .plant-item {
+            width: calc(33.33% - 20px);
+
+            .submit-button,
+            .delete-button {
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .submit-button {
+                background-color: $verte;
+                color: white;
+                margin-right: 10px;
+            }
+
+            .delete-button {
+                background-color: #ccc;
+                color: #333;
+            }
+
+            .submit-button:hover {
+                background-color: #34CB42;
+            }
+
+            .delete-button:hover {
+                background-color: #999;
+            }
+        }
+
+
+        .contbtnPlante {
+
+            display: flex;
+            //align-items: center;
+            gap: 10px;
+            //background-color: blue;
+            width: 48%;
+            margin-left: 1px;
+            //height: 20px;
+            //left: 100px;
+            margin-top: 520px; // tire le contenu vers le bas 
+
+
+            .btnplant {
+
+                //background-color: blue;
+                width: 200px;
+                position: relative;
+                display: flex;
+                left: 20px;
+                height: 50px;
+
+
+                .btnplants {
+
+
+                    button {
+                        color: $white;
+                        background-color: $verte;
+                        border-radius: 3px;
+                        width: 200px;
+                        height: 45px;
+                        font-weight: bold;
+                        border: none;
+                        //margin-bottom: 30px;
+                        border-radius: 2px;
+
+                    }
+                }
+
+            }
+
+            .btnplantt {
+
+
+                width: 200px;
+                position: relative;
+                display: flex;
+                left: 100px;
+                height: 50px;
+
+                .btnplantss {
+
+
+                    button {
+                        color: $white;
+                        background-color: $verte;
+                        border-radius: 3px;
+                        width: 200px;
+                        height: 45px;
+                        font-weight: bold;
+                        border: none;
+                        //margin-bottom: 30px;
+                        border-radius: 2px;
+
+                    }
+                }
+
+
+            }
+        }
+
+    }
+
+    .caseplantegarde {
+
+        position: absolute;
+        //background-color: red;
+        width: 70.7%;
+        margin-left: 450px;
+        top: 0; //permet de tiré le contenu en haut 
+        height: 739px;
+
+    }
+
+    .caseajoutplante {
+
+        position: absolute;
+        // background-color: red;
+        left: 450px;
+        right: 0;
+        top: 0; //permet de tiré le contenu en haut 
+        height: 100vh;
+
+
+        .titlejoutpante {
+            font-size: 20px;
+            color: black;
+        }
+
+
+
+        .contecaseplante {
+
+            //background-color: rgb(44, 153, 79);
+
+            width: 70.7%;
+
+
+
+            .ajouterplante {
+                //background-color: red;
+                //width: 400px;
+                //background-color: red;
+                position: relative;
+                display: flex;
+                left: 30px;
+                height: 350px;
+                margin-top: 10px;
+
+                .fomrcontenerplant {
+
+                    //background-color: violet;
+                    height: 300px;
+                    width: 560px;
+                    position: relative;
+                    //display: flex;
+                    //left:10px;
+                    right: 3px;
+
+                    .contpicture {
+
+                        //background-color: red;
+                        //left: 400px;
+                        height: 240px;
+                        top: 0px;
+                        position: relative;
+                        /*i{
+                            cursor: pointer;
+                        }*/
+
+                        .imgiconlable {
+                            //display: inline-block;
+                            align-items: center;
+                            gap: 10px;
+                            position: absolute;
+                            left: 10px;
+                            top: 0px;
+                            //height: 10px;
+
+                            //position: absolute;
+
+                            /* p{
+                                color: black;
+                                background-color: blue;
+                                font-size: 17px;
+                                //height: 100px;
+                                //display: inline-block;
+                                position: relative;
+                                left: 18px;
+                                //width: 100px;
+                                ///margin-bottom: 5px;
+                                margin-top: 5px;
+                                display: flex;
+
+
+                            }*/
+
+                            /* p{
+                               
+                                /* display: block;
+                                 text-align: left;
+                                 color: black;
+                                 background-color: rgb(13, 255, 0);
+                                 font-size: 17px;*/
+                            //display: block;
+                            /* color: black;
+                                 background-color: rgb(13, 255, 0);
+                                 font-size: 17px;
+                                 
+                                                                 
+                             }*/
+
+                            .labelimg {
+
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                                cursor: pointer;
+
+
+
+
+                            }
+                        }
+
+                        .inputnameimg {
+
+                            left: 100px;
+                            position: relative;
+
+                            .imginput {
+                                display: none;
+                                visibility: none;
+                                background-color: blueviolet;
+                                width: 340px;
+                                height: 32px;
+                                flex: 0 0 200px;
+                                margin-left: 10px;
+                                margin-bottom: 10px;
+                                box-shadow: 1px 1px 5px #CCC;
+                                border: 1px solid #CCC;
+                                border-radius: 2px;
+                                border: none;
+
+
+
+                            }
+
+
+
+
+
+                            #file-name {
+                                color: #B1B1B1;
+                                /* Couleur que vous souhaitez utiliser */
+                                font-size: 17px;
+                                //background-color: red;
+                                //color: black;
+                            }
+
+
+                            img {
+                                /*height: 150px;
+                                width: 150px;
+                                border-radius: 50%; // permet le format de resultat d'image en cercle 
+                                object-fit: cover;
+                                background-color: red;*/
+                                height: 150px;
+                                width: 150px;
+                                object-fit: cover;
+                                // background-color: red;
+                            }
+                        }
+                    }
+
+                    .nomFirsta {
+                        //display: flex;
+                        //background-color: greenyellow;
+                        //right: 50px;
+                        width: 560px;
+                        position: relative;
+                        //position: absolute;
+                        left: 30px;
+
+                        .labplant {
+
+                            /*display: flex;
+                            flex-direction: row;
+                            justify-content: flex-end;
+                            text-align: right;
+                            width: 400px;
+                            line-height: 26px;
+                           //margin-bottom: 10px;*/
+                            display: inline-block;
+                            width: 70px;
+                            text-align: right;
+                            margin-bottom: 10px;
+                            line-height: 40px;
+
+
+                        }
+
+                        .contplant {
+
+                            width: 340px;
+                            height: 32px;
+                            flex: 0 0 200px;
+                            margin-left: 10px;
+                            margin-bottom: 8px;
+                            box-shadow: 1px 1px 5px #CCC;
+                            border: 1px solid #CCC;
+                            border-radius: 2px;
+                            border: none;
+
+                        }
+
+                    }
+
+
+
+                    .datedebf {
+
+                        position: relative;
+                        //background-color: blue;
+
+
+                        .labdatedf {
+                            //background-color: red;
+                            display: inline-block;
+                            width: 100px;
+                            text-align: right;
+                            margin-bottom: 10px;
+                            line-height: 40px;
+                            position: relative;
+                            //right: 10px;
+                            //left: 65px;
+
+                        }
+
+                        .contdate {
+                            //background-color: red;
+                            position: relative;
+                            left: 10px;
+                            margin-bottom: 10px;
+                            display: inline-block;
+
+                            .typedate {
+                                width: 150px;
+                                height: 32px;
+                                flex: 0 0 200px;
+                                margin-left: 10px;
+                                margin-bottom: 8px;
+                                box-shadow: 1px 1px 5px #CCC;
+                                border: 1px solid #CCC;
+                                border-radius: 2px;
+                                border: none;
+                            }
+
+                        }
+
+
+
+                    }
+
+
+
+
+
+                }
+            }
+
+            .btnajouplant {
+
+                //background-color: red;
+                width: 300px;
+                position: relative;
+                display: flex;
+                left: 105px;
+                height: 50px;
+                margin-top: 100px;
+
+
+                .btnjoutpla {
+
+                    button {
+
+                        color: $white;
+                        background-color: $verte;
+                        border-radius: 3px;
+                        width: 200px;
+                        height: 45px;
+                        font-weight: bold;
+                        border: none;
+                        //margin-bottom: 30px;
+                        border-radius: 2px;
+
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
+    .caselistplante {
+
+        position: absolute;
+        background-color: red;
+        left: 450px;
+        right: 0;
+        top: 0; //permet de tiré le contenu en haut 
+        height: 100vh;
+
+    }
+
+    .casemessage {
+
+        position: absolute;
+        background-color: red;
+        width: 70.7%;
+        margin-left: 450px;
+        top: 0; //permet de tiré le contenu en haut 
+        height: 739px;
+
+    }
+
+    .casemapsclient {
+
+        position: absolute;
+        background-color: red;
+        left: 450px;
+        right: 0;
+        top: 0; //permet de tiré le contenu en haut 
+        height: 100vh;
+
+    }
+
+    .casebotanistecons {
+        position: absolute;
+        // background-color: red;
+        left: 450px;
+        right: 0;
+        top: 0; //permet de tiré le contenu en haut 
+        height: 100vh;
+
+        .titlebota {
+            color: black;
+        }
+
+        .messagebotaniste {
+
+
+            //background-color: red;
+            width: 600px;
+            display: block;
+            position: relative;
+            left: 40px;
+            height: 50px;
+
+
+            .picturebota {
+                height: 240px;
+                top: 0px;
+                //position: relative;
+                margin-bottom: 10px;
+                position: relative;
+                display: flex;
+
+
+                .inputmagbota {
+
+                    left: 100px;
+                    position: relative;
+
+                    .imginputb {
+                        display: none;
+                        visibility: none;
+                        background-color: blueviolet;
+                        width: 340px;
+                        height: 32px;
+                        flex: 0 0 200px;
+                        margin-left: 10px;
+                        margin-bottom: 0px;
+                        box-shadow: 1px 1px 5px #CCC;
+                        border: 1px solid #CCC;
+                        border-radius: 2px;
+                        border: none;
+                    }
+                }
+
+                .imgiconb {
+                    align-items: center;
+                    gap: 10px;
+                    position: absolute;
+                    left: 10px;
+                    top: 0px;
+
+                    .labelimg {
+
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        cursor: pointer;
+
+
+
+
+                    }
+                }
+
+
+                #file-name {
+                    color: #B1B1B1;
+                    /* Couleur que vous souhaitez utiliser */
+                    font-size: 17px;
+                    //background-color: red;
+                    //color: black;
+                }
+
+
+                img {
+                    /*height: 150px;
+                    width: 150px;
+                    border-radius: 50%; // permet le format de resultat d'image en cercle 
+                    object-fit: cover;
+                    background-color: red;*/
+                    height: 150px;
+                    width: 150px;
+                    object-fit: cover;
+                    // background-color: red;
+                }
+
+
+
+            }
+
+            .selctcontent {
+                //background-color: red;
+                //display: flex;
+                //position: relative;
+                margin-top: 30px;
+                //width: 500px;
+                //height: 100px;
+
+
+                .selectplant {
+
+                    display: inline-block;
+                    //background-color: aqua;
+                    width: 200px;
+                    text-align: right;
+                    margin-bottom: 0px;
+                    line-height: 40px;
+                    right: 86px;
+                    position: relative;
+                    display: inline-block;
+
+                }
+
+                .selectconent {
+                    width: 340px;
+                    height: 32px;
+                    flex: 0 0 200px;
+                    margin-left: 10px;
+                    margin-bottom: 0px;
+                    box-shadow: 1px 1px 5px #CCC;
+                    border: 1px solid #CCC;
+                    border-radius: 2px;
+                    border: none;
+                    right: 80px;
+                    position: relative;
+                    display: inline-block;
+                }
+            }
+
+            .messbot {
+
+                //background-color: blue;
+                margin-top: 10px;
+
+                .labelbota {
+                    display: block; //qui permet que le label en haut de input
+                    //margin-bottom: 5px;
+                    width: 500px;
+                    height: 38px;
+                    border-radius: 2px;
+                    border: none;
+                }
+
+                textarea {
+
+                    //background-color: red;
+
+                    width: 500px;
+                    height: 170px;
+                    border-radius: 2px;
+                    border: 1px solid #CCC;
+                    padding: 8px;
+                    font-weight: 200;
+                    font-size: 15px;
+                    font-family: Verdana;
+                    box-shadow: 1px 1px 5px #CCC;
+                    margin-bottom: 20px;
+
+                }
+
+            }
+
+
+
+
+
+        }
+
+        .botajotm {
+            width: 300px;
+            position: relative;
+            display: flex;
+            left: 180px;
+            height: 50px;
+            margin-top: 500px;
+
+            .butenmes {
+                button {
+
+                    color: $white;
+                    background-color: $verte;
+                    border-radius: 3px;
+                    width: 200px;
+                    height: 45px;
+                    font-weight: bold;
+                    border: none;
+                    //margin-bottom: 30px;
+                    border-radius: 2px;
+
+                }
+            }
+        }
+    }
+
+    .contenuProfil {
+
+        background-color: $verte;
+        width: 450px;
+        height: 100vh;
+
+        p {
+            //margin-top: ; une espace en haut du contenu 
+            font-size: 30px;
+            height: 15px;
+            color: white;
+            margin-bottom: 0px;
+            display: flex; //il permet de faire Fonctionner le align-items et justify-content au centre 
+            align-items: center;
+            justify-content: center;
+            //background-color: red;
+            padding: 40px; // c'est pour espace mais dans le contenu même exemple le texte 
+        }
+
+        .ContP {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 70px;
+
+            .profilcont {
+                width: 400px;
+                //background-color: red;
+                //display: flex;
+                list-style: none; // pour enlever le point au debut de liste 
+
+                .nav-item {
+                    color: white;
+                    font-size: 20px;
+
+                    .icon-link {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+
+                        //height: 60px;
+                        .itemsP {
+                            text-align: none;
+                            height: 50%;
+                            transition: 1s ease text-decoration;
+
+                            &.active {
+                                color: $grey;
+                            }
+
+                            &:hover {
+                                cursor: pointer;
+                                color: $grey;
+                            }
+                        }
+                    }
+                }
+
+                .mentions {
+
+                    //position: relative;
+                    /*body .active-modal {
+                        overflow-y: hidden;
+                    }*/
+                    /*background-color: aquamarine;*/
+                    //text-align: center;
+                    //padding: 10px 0px ;
+                    /* i{
+                        font-size: 17px;
+                        color: black;
+                    }*/
+                    .messagecontpop {
+                        /*background-color: blue;
+                        display: flex;
+                        height: 30px;
+                        width: 30px;*/
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+
+                        .openFonctions {
+                            color: $white;
+                            font-size: 20px;
+                            /* background-color: red;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            width: 500px;
+                            position: relative;*/
+                            /* .itemsPp{
+                                
+                                color: white;
+                                font-size: 20px;
+                            }*/
+                            /*text-align: none;
+                            height: 50%;
+                            transition: 1s ease text-decoration;
+                            color: $grey;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;*/
+                        }
+                    }
+
+                    .openFonction:hover {
+                        cursor: pointer;
+                    }
+
+                    &.active {
+                        color: $grey;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                        color: $grey;
+                    }
+
+                    .modalments,
+                    .overlays {
+                        z-index: 999;
+                        width: 100vw;
+                        //height: 100vh;
+                        height: 100vh;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        //bottom: 70;
+                        position: fixed;
+                        overflow: hidden;
+                        background: rgba(255, 254, 254, 0.8);
+
+                        .PopUps {
+                            z-index: 99999;
+                            position: absolute;
+                            height: 600px;
+                            top: 20px;
+                            left: 0;
+                            right: 0;
+                            margin-left: auto;
+                            margin-right: auto;
+                            background: $white;
+                            box-shadow: 0px 0px 5px 5px grey;
+                            width: 80%;
+                            border-radius: 5px;
+                            overflow-y: scroll;
+
+                            .close-modals {
+                                z-index: 9999;
+                                position: absolute;
+                                top: 10px;
+                                right: 10px;
+                                background: none;
+                                font-size: 18px;
+                                padding: 5px 10px;
+
+                                &:hover {
+                                    cursor: pointer;
+                                    color: $white;
+                                    background: $verte;
+                                    border: none;
+                                }
+                            }
+                        }
+
+                        .titles {
+                            text-align: center;
+                            margin-left: 4%;
+                            margin-top: 55px !important;
+                            margin-bottom: 40px !important;
+
+                            .logoMents {
+                                position: absolute;
+                                left: 8px;
+                                top: 10px;
+                            }
+                        }
+
+                        .lightTitles {
+                            text-align: left;
+                            margin-left: 3%;
+                            margin-top: 30px !important;
+                            font-size: 30px;
+                            color: black;
+                            margin-bottom: 3px;
+                        }
+
+                        .mentionContets {
+                            .mentconts {
+                                text-align: left;
+                                margin-left: 4%;
+                                margin-right: 4%;
+                            }
+
+                            .sousTitres {
+                                text-align: left;
+                                margin-left: 4%;
+                                margin-top: 20px !important;
+                                font-size: 20px;
+                                color: black;
+                                margin-bottom: 4px;
+                            }
+                        }
+                    }
+                }
+
+                /* li{
+                    color: white;
+                    font-size: 20px;
+                    background-color: blue;
+                    //display: inline-block;
+                    justify-content: space-between;                
+                }*/
+            }
+        }
+    }
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black overlay */
+    display: flex;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+    z-index: 1000;
+    /* Ensure the modal is on top */
+}
+
+/* Styles for the modal centering */
+.modal-center {
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    max-width: 400px;
+}
+
+/* Styles for the modal content */
+.modal-content {
+    text-align: center;
+}
+
+/* Styles for the Delete button */
+.delete-button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.cancel-button {
+    background: #ccc;
+    /* Light gray background */
+    color: #333;
+    /* Dark gray text color */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.modifierProfile {
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+    }
+
+    .modal-center {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    .modal-content {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .photo-preview {
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+    }
+
+    .modal-buttons {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .submit-button,
+    .cancel-button {
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .submit-button {
+        background-color: $verte;
+        color: white;
+        margin-right: 10px;
+    }
+
+    .cancel-button {
+        background-color: #ccc;
+        color: #333;
+    }
+
+    .submit-button:hover {
+        background-color: #34CB42;
+    }
+
+    .cancel-button:hover {
+        background-color: #999;
+    }
+
+    .scrollable-content {
+        max-height: 500px;
+        /* Adjust the height as needed */
+        overflow: auto;
+    }
+}
+
+.image-spinner {
+    animation: spin 2s linear infinite; // Adjust the animation duration and timing as needed
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.parent-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+}
+
+.contenuProfil .plant-item p {
+    font-size: initial;
+    height: initial;
+    color: initial;
+    margin-bottom: initial;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    padding: initial;
+}
