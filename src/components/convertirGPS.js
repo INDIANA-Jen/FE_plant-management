@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function GeocodeCoordinates({ lat, long }) {
+function GeocodeCoordinates(lat, long) {
   const [address, setAddress] = useState('');
 
   useEffect(() => {
@@ -14,12 +14,12 @@ function GeocodeCoordinates({ lat, long }) {
           const formattedAddress = data.results[0].formatted_address;
           setAddress(formattedAddress);
         } else {
-          setAddress('Address not found');
+          setAddress('Adresse introuvable');
         }
       })
       .catch((error) => {
         console.error('Error fetching address:', error);
-        setAddress('Error fetching address');
+        setAddress('Adresse introuvable');
       });
   }, [lat, long]);
 

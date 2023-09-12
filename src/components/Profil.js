@@ -367,8 +367,8 @@ const SectionProfil = () => {
     //fin Ajouter une plante a faire garder
 
     //Deconnexion
-    const deconnexion = () =>{
-        window.history.replaceState(null, '',  window.location.href = '/');
+    const deconnexion = () => {
+        window.history.replaceState(null, '', window.location.href = '/');
     };
     //fin Deconnexion
 
@@ -391,18 +391,50 @@ const SectionProfil = () => {
                 <p>Nom: {plant.nom_plante}</p>
                 <p>Type: {plant.type_de_plante}</p>
                 <p>Message: {plant.message_proprietaire}</p>
+                {/* <p>Adresse: {GeocodeCoordinates(plant.latitude_plante, plant.longitude_plante)}</p> */}
                 <p>Date Début: {plant.date_debut}</p>
                 <p>Date fin: {plant.date_fin}</p>
-                <button className="submit-button">Garder cette plante</button>
+                <button className="submit-button" onClick={() => garderCettePlante(localStorage.getItem("id_utilisateur"), plant.id_garderie_plante)}>Garder cette plante</button>
             </div>
         );
     };
 
+    const garderCettePlante = async (id_utilisateur, id_garderie_plante) => {
+        const donnees = {
+            id_garderie_plante: id_garderie_plante,
+            id_gardien: id_utilisateur
+        };
+        try {
+            const response = await fetch(
+                `http://127.0.0.1:8000/ajouter-gardien`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(donnees),
+                }
+            );
+
+            const responseData = await response.json();
+
+            if (response.status === 200) {
+                alert(responseData.message);
+                window.location.reload();
+            } else if (response.status === 500) {
+                alert(responseData.erreur);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
+
 
     const [listePlanteDisponibleAFaireGarder, setListePlanteDisponibleAFaireGarder] = useState();
-    const recupererPlanteDisponibleAFaireGarder = async(id_utilisateur) => {
+    const [loadingListPlante, setLoadingListPlante] = useState(true);
+    const recupererPlanteDisponibleAFaireGarder = async (id_utilisateur) => {
         try {
-            setLoading(true);
+            setLoadingListPlante(true);
             const response = await fetch(
                 `http://127.0.0.1:8000/recuperer-liste-plante-disponible-a-faire-garder/${id_utilisateur}`,
                 {
@@ -423,10 +455,170 @@ const SectionProfil = () => {
         } catch (error) {
             console.error("Error:", error);
         } finally {
-            setLoading(false);
+            setLoadingListPlante(false);
         }
     };
     //fin Recuperation des plante disponible a faire garder
+
+    //Plante que je garde
+    const ListePlantesQueJeGarde = ({ plants }) => {
+        return (
+            <div className="plant-list">
+                {plants.map((plant, index) => (
+                    <PlanteSimpleQueJeGarde key={index} plant={plant} />
+                ))}
+            </div>
+        );
+    };
+
+    const PlanteSimpleQueJeGarde = ({ plant }) => {
+        return (
+            <div className="plant-item">
+                <img src={plant.photo} alt={plant.name} height={200} width={200} />
+                <p>Nom: {plant.nom_plante}</p>
+                <p>Type: {plant.type_de_plante}</p>
+                <p>Message: {plant.message_proprietaire}</p>
+                {plant.conseil_botaniste ? (
+                    <p>Conseil Botaniste: {plant.conseil_botaniste}</p>
+                ) : (
+                    <p>Conseil Botaniste: Aucun</p>
+                )
+                }
+                <p>Date Début: {plant.date_debut}</p>
+                <p>Date fin: {plant.date_fin}</p>
+                <button className="submit-button" onClick={() => garderCettePlante(localStorage.getItem("id_utilisateur"), plant.id_garderie_plante)}>Ajouter un entretien</button>
+            </div>
+        );
+    };
+
+    const [loadingPlanteQueJeGarde, setLoadingPlanteQueJeGarde] = useState(true);
+    const [planteQueJegarde, setPlanteQueJeGarde] = useState();
+    const recupererPlanteQueJeGarde = async (id_utilisateur) => {
+        try {
+            setLoadingPlanteQueJeGarde(true);
+            const response = await fetch(
+                `http://127.0.0.1:8000/recuperer-liste-plante-que-je-garde/${id_utilisateur}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            const responseData = await response.json();
+
+            if (response.status === 200) {
+                setPlanteQueJeGarde(responseData.donnees);
+            } else if (response.status === 500) {
+                alert(responseData.erreur);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        } finally {
+            setLoadingPlanteQueJeGarde(false);
+        }
+    };
+    //fin Plante que je garde
+
+    //Conseil Botaniste
+    const ConseilBotaniste = ({ plants }) => {
+        return (
+            <div className="plant-list">
+                {plants.map((plant, index) => (
+                    <SimpleConseilBotaniste key={index} plant={plant} />
+                ))}
+            </div>
+        );
+    };
+    const [idGarderiePlante, setIdGarderiePlante] = useState();
+    const SimpleConseilBotaniste = ({ plant }) => {
+        return (
+            <div className="plant-item">
+                <img src={plant.photo} alt={plant.name} height={200} width={200} />
+                <p>Nom: {plant.nom_plante}</p>
+                <p>Type: {plant.type_de_plante}</p>
+                <p>Message: {plant.message_proprietaire}</p>
+                {plant.conseil_botaniste ? (
+                        <p>Conseil Botaniste: {plant.conseil_botaniste}</p>
+                ) : (
+                    <p>Conseil Botaniste: Aucun</p>
+                )}
+                <p>Date Début: {plant.date_debut}</p>
+                <p>Date fin: {plant.date_fin}</p>
+                <button className="submit-button" onClick={(event) => { toggleConseilBotaniste(event); setIdGarderiePlante(plant.id_garderie_plante); }}>Ajouter un conseil</button>
+            </div>
+        );
+    };
+
+    const [loadingBotaniste, setLoadingBotaniste] = useState(true);
+    const [planteActive, setPlanteActive] = useState();
+
+    const recupererPlanteActivePourBotaniste = async () => {
+        try {
+            setLoadingBotaniste(true);
+            const response = await fetch(
+                `http://127.0.0.1:8000/garderie-plantes-actives`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            const responseData = await response.json();
+
+            if (response.status === 200) {
+                setPlanteActive(responseData.donnees);
+            } else if (response.status === 500) {
+                alert(responseData.erreur);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        } finally {
+            setLoadingBotaniste(false);
+        }
+    };
+
+    const handleConseilInput = (e) => {
+        const { name, value } = e.target;
+        setConseilData({ ...conseilData, [name]: value });
+    };
+
+    const [conseilData, setConseilData] = useState({
+        conseil_botaniste: ''
+    });
+    const ajouterConseilBotaniste = async () => {
+        const donnees = {
+            conseil_botaniste: conseilData.conseil_botaniste,
+            id_garderie_plante: idGarderiePlante
+        };
+        try {
+            setLoadingBotaniste(true);
+            const response = await fetch(
+                `http://127.0.0.1:8000/conseil-botaniste`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(donnees),
+                }
+            );
+
+            const responseData = await response.json();
+
+            if (response.status === 200) {
+                setPlanteActive(responseData.donnees);
+            } else if (response.status === 500) {
+                alert(responseData.erreur);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
+    //Fin Conseil Botaniste
 
     const [activeComponent, setActiveComponent] = useState("profil"); // Initial active component
 
@@ -441,8 +633,14 @@ const SectionProfil = () => {
         else if (activeComponent === "ajoutplante") {
             recupererNomPlantes(id_utilisateur);
         }
-        else if (activeComponent === "listplante"){
+        else if (activeComponent === "listplante") {
             recupererPlanteDisponibleAFaireGarder(id_utilisateur);
+        }
+        else if (activeComponent === 'plantesGarde') {
+            recupererPlanteQueJeGarde(id_utilisateur);
+        }
+        else if (activeComponent === 'botanistecons') {
+            recupererPlanteActivePourBotaniste();
         }
     }, [activeComponent]);
 
@@ -452,6 +650,13 @@ const SectionProfil = () => {
     const [modal, setModal] = useState(false);
     const [supprimerModal, setSupprimerModal] = useState(false);
     const [modifierProfilModal, setModifierProfilModal] = useState(false);
+    const [ConseilBotanisteModal, setConseilBotanisteModal] = useState(false);
+
+    const toggleConseilBotaniste = (event) => {
+        event.preventDefault();
+        setConseilBotanisteModal(!ConseilBotanisteModal);
+    };
+
     const toggleModifierProfil = (event) => {
         event.preventDefault();
         setModifierProfilModal(!modifierProfilModal);
@@ -472,16 +677,16 @@ const SectionProfil = () => {
     //atreto
     //fin popup
 
-    const [file, setFile] = useState();
+    // const [file, setFile] = useState();
 
-    function handleChange(e) {
-        console.log(e.target.files);
-        setFile(URL.createObjectURL(e.target.files[0]));
+    // function handleChange(e) {
+    //     console.log(e.target.files);
+    //     setFile(URL.createObjectURL(e.target.files[0]));
 
-        const selectedFile = e.target.files[0];
-        const fileName = selectedFile ? selectedFile.name : "";
-        document.getElementById("file-name").textContent = fileName;
-    }
+    //     const selectedFile = e.target.files[0];
+    //     const fileName = selectedFile ? selectedFile.name : "";
+    //     document.getElementById("file-name").textContent = fileName;
+    // }
 
     const renderComponent = () => {
         switch (activeComponent) {
@@ -761,7 +966,7 @@ const SectionProfil = () => {
             case "mesPlantes":
                 return (
                     <div className="casemesplantes">
-                        <p className="titlemesplantes">Mes Plantes Component Content</p>
+                        <p className="titlemesplantes">Mes Plantes</p>
                         {loading ? (
                             <div className="parent-container">
                                 <img src="/arosaje-spin.png" className="image-spinner" />
@@ -775,72 +980,15 @@ const SectionProfil = () => {
             case "plantesGarde":
                 return (
                     <div className="caseajoutplante">
-                        <p className="titlejoutpante">Ajouter plante a faire garder</p>
-
-                        <div className="contecaseplante">
-                            <div className="ajouterplante">
-                                <form className="fomrcontenerplant">
-                                    {/* image*/}
-
-                                    <div className="contpicture">
-                                        <div className="inputnameimg">
-                                            <input
-                                                type="file"
-                                                id="firstimg"
-                                                onChange={handleChange}
-                                                className="imginput"
-                                            />
-                                            <p id="file-name" color="#B1B1B1"></p>
-                                            <img src={file} />
-                                        </div>
-                                        <div className="imgiconlable">
-                                            <label for="firstimg" className="labelimg">
-                                                <PiPlusFill color="#B1B1B1" fontSize={40} />
-                                            </label>
-                                            Ajouter une photo
-                                        </div>
-                                    </div>
-
-                                    {/*nOM*/}
-
-                                    <div className="nomFirsta">
-                                        <label className="labplant">Nom : </label>
-                                        <input
-                                            className="contplant"
-                                            type="text"
-                                            id="name"
-                                            name="nom_plante"
-                                        />
-                                    </div>
-                                    {/*Prenom*/}
-
-                                    <div className="nomFirsta">
-                                        <label className="labplant">Type Plante: </label>
-                                        <input
-                                            className="contplant"
-                                            type="text"
-                                            id="typePlante"
-                                            name="type_de_plante"
-                                        />
-                                    </div>
-
-                                    <div className="nomFirsta">
-                                        <label className="labplant">Description: </label>
-                                        <input
-                                            className="contplant"
-                                            type="text"
-                                            id="description"
-                                            name="description"
-                                        />
-                                    </div>
-                                </form>
+                        <p className="titlejoutpante">Plante que je garde</p>
+                        {loadingPlanteQueJeGarde ? (
+                            <div className="parent-container">
+                                <img src="/arosaje-spin.png" className="image-spinner" />
                             </div>
-                            <div className="btnajouplant">
-                                <div className="btnjoutpla">
-                                    <button /*type="submit" */>Envoyer</button>
-                                </div>
-                            </div>
-                        </div>
+                        ) : (
+                            <ListePlantesQueJeGarde plants={planteQueJegarde} />
+                        )
+                        }
                     </div>
                 );
             case "ajoutplante":
@@ -938,7 +1086,7 @@ const SectionProfil = () => {
                 return (
                     <div className="caselistplante">
                         <p>liste des plante</p>
-                        {loading ? (
+                        {loadingListPlante ? (
                             <div className="parent-container">
                                 <img src="/arosaje-spin.png" className="image-spinner" />
                             </div>
@@ -960,66 +1108,56 @@ const SectionProfil = () => {
                 return (
                     <div className="casebotanistecons">
                         <p className="titlebota">Botanise</p>
-                        <div className="contebotaniste">
-                            <div className="ajoutconseilBota">
-                                <form className="messagebotaniste">
-                                    {/* photo */}
-
-                                    <div className="picturebota">
-                                        <div className="inputmagbota">
-                                            <input
-                                                type="file"
-                                                id="firstimg"
-                                                onChange={handleChange}
-                                                className="imginputb"
-                                            />
-                                            <p id="file-name" color="#B1B1B1"></p>
-                                            <img src={file} />
-                                        </div>
-                                        <div className="imgiconb">
-                                            <label for="firstimg" className="labelimg">
-                                                <PiPlusFill color="#B1B1B1" fontSize={40} />
-                                            </label>
-                                            Ajouter une photo
-                                        </div>
-                                    </div>
-
-                                    {/*fin photo */}
-
-                                    <div className="selctcontent">
-                                        <label for="cars" className="selectplant">
-                                            Nom de plante :{" "}
-                                        </label>
-                                        <select name="cars" id="cars" className="selectconent">
-                                            <option value="volvo">Volvo</option>
-                                            <option value="saab">Saab</option>
-                                            <option value="opel">Opel</option>
-                                            <option value="audi">Audi</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="messbot">
-                                        {/* message */}
-
-                                        <label className="labelbota" htmlFor="messagebota">
-                                            Message :{" "}
-                                        </label>
-                                        <textarea
-                                            name="messageBotniste"
-                                            placeholder=" "
-                                            onChange={handleChange}
-                                            required="required"
-                                        />
-                                    </div>
-                                </form>
+                        {loadingBotaniste ? (
+                            <div className="parent-container">
+                                <img src="/arosaje-spin.png" className="image-spinner" />
                             </div>
-                        </div>
-                        <div className="botajotm">
-                            <div className="butenmes">
-                                <button /*type="submit" */>Envoyer</button>
-                            </div>
+                        ) : (
+                            <ConseilBotaniste plants={planteActive} />
+                        )
+                        }
+                        <div className="modifierProfile">
+                            {ConseilBotanisteModal && (
+                                <div className="modal-overlay">
+                                    <div className="modal-center">
+                                        <div className="modal-content">
+                                            <h2>Ajouter votre conseil</h2>
+                                            <div className="scrollable-content">
+                                                <form
+                                                    onSubmit={() =>
+                                                        ajouterConseilBotaniste()
+                                                    }
+                                                >
+                                                    <div className="form-group">
+                                                        <label htmlFor="conseil_botaniste">Conseil:</label>
+                                                        <input
+                                                            type="text"
+                                                            id="conseil_botaniste"
+                                                            name="conseil_botaniste"
+                                                            value={conseilData.conseil_botaniste}
+                                                            onChange={handleConseilInput}
+                                                        />
+                                                    </div>
+                                                    <div className="modal-buttons">
+                                                        <button className="submit-button" type="submit">
+                                                            Enregistrer
+                                                        </button>
+                                                        <button
+                                                            className="cancel-button"
+                                                            onClick={toggleConseilBotaniste}
+                                                        >
+                                                            Annuler
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
+
                 );
 
             // ... Add cases for other components

@@ -254,7 +254,52 @@
             color: black;
         }
 
+        .plant-list {
+            position: absolute;
+            left: 0px;
+            right: 0;
+            height: 100vh;
+            // overflow-y: auto;
+            /* Enable vertical scrolling when needed */
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow items to wrap to the next line */
+            justify-content: flex-start;
+            /* Start items from the left */
+            gap: 20px;
+            /* Adjust the gap between items */
+            padding: 20px;
+            /* Add padding as needed */
+        }
 
+        .plant-item {
+            width: calc(33.33% - 20px);
+
+            .submit-button,
+            .delete-button {
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .submit-button {
+                background-color: $verte;
+                color: white;
+                margin-right: 10px;
+            }
+
+            .delete-button {
+                background-color: #ccc;
+                color: #333;
+            }
+
+            .submit-button:hover {
+                background-color: #34CB42;
+            }
+
+            .delete-button:hover {
+                background-color: #999;
+            }}
 
         .contecaseplante {
 
@@ -533,12 +578,59 @@
     .caselistplante {
 
         position: absolute;
-        background-color: red;
+        // background-color: red;
         left: 450px;
         right: 0;
         top: 0; //permet de tiré le contenu en haut 
         height: 100vh;
 
+        .plant-list {
+            position: absolute;
+            left: 0px;
+            right: 0;
+            height: 100vh;
+            // overflow-y: auto;
+            /* Enable vertical scrolling when needed */
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow items to wrap to the next line */
+            justify-content: flex-start;
+            /* Start items from the left */
+            gap: 20px;
+            /* Adjust the gap between items */
+            padding: 20px;
+            /* Add padding as needed */
+        }
+
+        .plant-item {
+            width: calc(33.33% - 20px);
+
+            .submit-button,
+            .delete-button {
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .submit-button {
+                background-color: $verte;
+                color: white;
+                margin-right: 10px;
+            }
+
+            .delete-button {
+                background-color: #ccc;
+                color: #333;
+            }
+
+            .submit-button:hover {
+                background-color: #34CB42;
+            }
+
+            .delete-button:hover {
+                background-color: #999;
+            }
+        }
     }
 
     .casemessage {
@@ -575,193 +667,51 @@
             color: black;
         }
 
-        .messagebotaniste {
-
-
-            //background-color: red;
-            width: 600px;
-            display: block;
-            position: relative;
-            left: 40px;
-            height: 50px;
-
-
-            .picturebota {
-                height: 240px;
-                top: 0px;
-                //position: relative;
-                margin-bottom: 10px;
-                position: relative;
-                display: flex;
-
-
-                .inputmagbota {
-
-                    left: 100px;
-                    position: relative;
-
-                    .imginputb {
-                        display: none;
-                        visibility: none;
-                        background-color: blueviolet;
-                        width: 340px;
-                        height: 32px;
-                        flex: 0 0 200px;
-                        margin-left: 10px;
-                        margin-bottom: 0px;
-                        box-shadow: 1px 1px 5px #CCC;
-                        border: 1px solid #CCC;
-                        border-radius: 2px;
-                        border: none;
-                    }
-                }
-
-                .imgiconb {
-                    align-items: center;
-                    gap: 10px;
-                    position: absolute;
-                    left: 10px;
-                    top: 0px;
-
-                    .labelimg {
-
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                        cursor: pointer;
-
-
-
-
-                    }
-                }
-
-
-                #file-name {
-                    color: #B1B1B1;
-                    /* Couleur que vous souhaitez utiliser */
-                    font-size: 17px;
-                    //background-color: red;
-                    //color: black;
-                }
-
-
-                img {
-                    /*height: 150px;
-                    width: 150px;
-                    border-radius: 50%; // permet le format de resultat d'image en cercle 
-                    object-fit: cover;
-                    background-color: red;*/
-                    height: 150px;
-                    width: 150px;
-                    object-fit: cover;
-                    // background-color: red;
-                }
-
-
-
-            }
-
-            .selctcontent {
-                //background-color: red;
-                //display: flex;
-                //position: relative;
-                margin-top: 30px;
-                //width: 500px;
-                //height: 100px;
-
-
-                .selectplant {
-
-                    display: inline-block;
-                    //background-color: aqua;
-                    width: 200px;
-                    text-align: right;
-                    margin-bottom: 0px;
-                    line-height: 40px;
-                    right: 86px;
-                    position: relative;
-                    display: inline-block;
-
-                }
-
-                .selectconent {
-                    width: 340px;
-                    height: 32px;
-                    flex: 0 0 200px;
-                    margin-left: 10px;
-                    margin-bottom: 0px;
-                    box-shadow: 1px 1px 5px #CCC;
-                    border: 1px solid #CCC;
-                    border-radius: 2px;
-                    border: none;
-                    right: 80px;
-                    position: relative;
-                    display: inline-block;
-                }
-            }
-
-            .messbot {
-
-                //background-color: blue;
-                margin-top: 10px;
-
-                .labelbota {
-                    display: block; //qui permet que le label en haut de input
-                    //margin-bottom: 5px;
-                    width: 500px;
-                    height: 38px;
-                    border-radius: 2px;
-                    border: none;
-                }
-
-                textarea {
-
-                    //background-color: red;
-
-                    width: 500px;
-                    height: 170px;
-                    border-radius: 2px;
-                    border: 1px solid #CCC;
-                    padding: 8px;
-                    font-weight: 200;
-                    font-size: 15px;
-                    font-family: Verdana;
-                    box-shadow: 1px 1px 5px #CCC;
-                    margin-bottom: 20px;
-
-                }
-
-            }
-
-
-
-
-
+        .plant-list {
+            position: absolute;
+            left: 0px;
+            right: 0;
+            height: 100vh;
+            // overflow-y: auto;
+            /* Enable vertical scrolling when needed */
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow items to wrap to the next line */
+            justify-content: flex-start;
+            /* Start items from the left */
+            gap: 20px;
+            /* Adjust the gap between items */
+            padding: 20px;
+            /* Add padding as needed */
         }
 
-        .botajotm {
-            width: 300px;
-            position: relative;
-            display: flex;
-            left: 180px;
-            height: 50px;
-            margin-top: 500px;
+        .plant-item {
+            width: calc(33.33% - 20px);
 
-            .butenmes {
-                button {
+            .submit-button,
+            .delete-button {
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+            }
 
-                    color: $white;
-                    background-color: $verte;
-                    border-radius: 3px;
-                    width: 200px;
-                    height: 45px;
-                    font-weight: bold;
-                    border: none;
-                    //margin-bottom: 30px;
-                    border-radius: 2px;
+            .submit-button {
+                background-color: $verte;
+                color: white;
+                margin-right: 10px;
+            }
 
-                }
+            .delete-button {
+                background-color: #ccc;
+                color: #333;
+            }
+
+            .submit-button:hover {
+                background-color: #34CB42;
+            }
+
+            .delete-button:hover {
+                background-color: #999;
             }
         }
     }
