@@ -14,8 +14,10 @@ import { SiHandshake } from "react-icons/si";
 import { HiOutlineX } from "react-icons/hi";
 import { PiPlusFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import GeocodeCoordinates from './convertirGPS';
 
 const SectionProfil = () => {
+
     const navigate = useNavigate();
     // pour stocké la photo
     const [photoPreview, setPhotoPreview] = useState();
@@ -202,26 +204,26 @@ const SectionProfil = () => {
 
     const ListePlantes = ({ plants }) => {
         return (
-          <div className="plant-list">
-            {plants.map((plant, index) => (
-              <PlanteSimple key={index} plant={plant} />
-            ))}
-          </div>
+            <div className="plant-list">
+                {plants.map((plant, index) => (
+                    <PlanteSimple key={index} plant={plant} />
+                ))}
+            </div>
         );
-      };
+    };
 
-      const PlanteSimple = ({ plant }) => {
+    const PlanteSimple = ({ plant }) => {
         return (
-          <div className="plant-item">
-            <img src={plant.photo} alt={plant.name} height={200} width={200}/>
-            <p>Nom: {plant.nom_plante}</p>
-            <p>Type: {plant.type_de_plante}</p>
-            <p>Description: {plant.description}</p>
-            <button className="submit-button">Edit</button>
-            <button className="submit-button">Delete</button>
-          </div>
+            <div className="plant-item">
+                <img src={plant.photo} alt={plant.name} height={200} width={200} />
+                <p>Nom: {plant.nom_plante}</p>
+                <p>Type: {plant.type_de_plante}</p>
+                <p>Description: {plant.description}</p>
+                <button className="submit-button">Edit</button>
+                <button className="submit-button">Delete</button>
+            </div>
         );
-      };
+    };
 
     const [donneesPlantesUtilisateur, setDonneesPlantesUtilisateur] = useState();
     const [loading, setLoading] = useState(true);
@@ -256,13 +258,175 @@ const SectionProfil = () => {
     };
     //fin Recuperer liste de plante de l'utilisateur
 
-    //Recuperer nom plantes
+    //Ajouter une plante a faire garder
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+    const [erreur, setErreur] = useState(null);
+
+    useEffect(() => {
+        // Verifie si la geolocalisation est disponible dans le navigateur
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setLatitude(position.coords.latitude);
+                    setLongitude(position.coords.longitude);
+                    setErreur(null);
+                },
+                (err) => {
+                    setErreur(err.message);
+                }
+            );
+        } else {
+            setErreur("Geolocalisation indisponible.");
+        }
+    }, [latitude, longitude]);
     const [nomPlante, setNomPlante] = useState([]);
-    const [nomPlanteSelectionner, setNomPlanteSelectionner] = useState('');
+    const [idPlanteSelectionner, setIdPlanteSelectionner] = useState('');
     const handlePlanteSelect = (event) => {
-        setNomPlanteSelectionner(event.target.value);
+        setIdPlanteSelectionner(event.target.value);
     };
-    //fin Recuperer nom plantes
+
+    const handlePlanteGarder = (e) => {
+        const { name, value } = e.target;
+        setplanteGarderData({ ...planteGarderData, [name]: value });
+    };
+
+    const [planteGarderData, setplanteGarderData] = useState({
+        id_proprietaire: localStorage.getItem("id_utilisateur"),
+        id_plante: idPlanteSelectionner,
+        message_proprietaire: '',
+        longitude_plante: longitude,
+        latitude_plante: latitude,
+        date_debut: '',
+        date_fin: ''
+    });
+
+    const recupererNomPlantes = async (id_utilisateur) => {
+        try {
+            setLoading(true);
+            const response = await fetch(
+                `http://127.0.0.1:8000/nom-plante/${id_utilisateur}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            const responseData = await response.json();
+
+            if (response.status === 200) {
+                setNomPlante(responseData.donnees);
+            } else if (response.status === 500) {
+                alert(responseData.erreur);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const ajouterPlanteAFaireGarder = async (event, id_utilisateur) => {
+        event.preventDefault();
+        const donnees = {
+            id_proprietaire: id_utilisateur,
+            id_plante: idPlanteSelectionner,
+            message_proprietaire: planteGarderData.message_proprietaire,
+            longitude_plante: longitude,
+            latitude_plante: latitude,
+            date_debut: planteGarderData.date_debut,
+            date_fin: planteGarderData.date_fin,
+            photo: photoPreview
+        };
+        try {
+            const response = await fetch(
+                `http://127.0.0.1:8000/plante-a-faire-garder`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(donnees)
+                }
+            );
+
+            const responseData = await response.json();
+
+            if (response.status === 201) {
+                alert(responseData.message);
+            } else if (response.status === 500) {
+                alert(responseData.erreur);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+
+    };
+    //fin Ajouter une plante a faire garder
+
+    //Deconnexion
+    const deconnexion = () =>{
+        window.history.replaceState(null, '',  window.location.href = '/');
+    };
+    //fin Deconnexion
+
+
+    //Recuperation des plante disponible a faire garder
+    const ListePlantesAGarder = ({ plants }) => {
+        return (
+            <div className="plant-list">
+                {plants.map((plant, index) => (
+                    <PlanteSimpleAgarder key={index} plant={plant} />
+                ))}
+            </div>
+        );
+    };
+
+    const PlanteSimpleAgarder = ({ plant }) => {
+        return (
+            <div className="plant-item">
+                <img src={plant.photo} alt={plant.name} height={200} width={200} />
+                <p>Nom: {plant.nom_plante}</p>
+                <p>Type: {plant.type_de_plante}</p>
+                <p>Message: {plant.message_proprietaire}</p>
+                <p>Date Début: {plant.date_debut}</p>
+                <p>Date fin: {plant.date_fin}</p>
+                <button className="submit-button">Garder cette plante</button>
+            </div>
+        );
+    };
+
+
+    const [listePlanteDisponibleAFaireGarder, setListePlanteDisponibleAFaireGarder] = useState();
+    const recupererPlanteDisponibleAFaireGarder = async(id_utilisateur) => {
+        try {
+            setLoading(true);
+            const response = await fetch(
+                `http://127.0.0.1:8000/recuperer-liste-plante-disponible-a-faire-garder/${id_utilisateur}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            const responseData = await response.json();
+
+            if (response.status === 200) {
+                setListePlanteDisponibleAFaireGarder(responseData.donnees);
+            } else if (response.status === 500) {
+                alert(responseData.erreur);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    //fin Recuperation des plante disponible a faire garder
 
     const [activeComponent, setActiveComponent] = useState("profil"); // Initial active component
 
@@ -274,8 +438,11 @@ const SectionProfil = () => {
         else if (activeComponent === "mesPlantes") {
             recupererPlantesUtilisateur(id_utilisateur);
         }
-        else if (activeComponent === "ajoutplante"){
-
+        else if (activeComponent === "ajoutplante") {
+            recupererNomPlantes(id_utilisateur);
+        }
+        else if (activeComponent === "listplante"){
+            recupererPlanteDisponibleAFaireGarder(id_utilisateur);
         }
     }, [activeComponent]);
 
@@ -600,7 +767,7 @@ const SectionProfil = () => {
                                 <img src="/arosaje-spin.png" className="image-spinner" />
                             </div>
                         ) : (
-                            <ListePlantes plants={donneesPlantesUtilisateur}/>
+                            <ListePlantes plants={donneesPlantesUtilisateur} />
                         )
                         }
                     </div>
@@ -680,78 +847,90 @@ const SectionProfil = () => {
                 return (
                     <div className="caseajoutplante">
                         <p className="titlejoutpante">Ajouter plante a faire garder</p>
-
-                        <div className="contecaseplante">
-                            <div className="ajouterplante">
-                                <form className="fomrcontenerplant">
-                                    {/* image*/}
-
-                                    <div className="contpicture">
-                                        <div className="inputnameimg">
-                                            <input
-                                                type="file"
-                                                id="firstimg"
-                                                onChange={handleChange}
-                                                className="imginput"
-                                            />
-                                            <p id="file-name" color="#B1B1B1"></p>
-                                            <img src={file} />
-                                        </div>
-                                        <div className="imgiconlable">
-                                            <label for="firstimg" className="labelimg">
-                                                <PiPlusFill color="#B1B1B1" fontSize={40} />
-                                            </label>
-                                            Ajouter une photo
-                                        </div>
-                                    </div>
-
-                                    {/*nOM*/}
-
-                                    <div className="nomFirsta">
-                                    <label for="plantes" className="selectplant">
-                                            Nom de plante :{" "}
-                                        </label>
-                                        <select name="plantes" id="plantes" value={nomPlanteSelectionner} onChange={handlePlanteSelect} className="selectconent">
-                                            <option value="volvo">Volvo</option>
-                                            <option value="saab">Saab</option>
-                                            <option value="opel">Opel</option>
-                                            <option value="audi">Audi</option>
-                                        </select>
-                                    </div>
-                                    {/*Prenom*/}
-
-                                    <div className="nomFirsta">
-                                        <label className="labplant">Message: </label>
-                                        <input
-                                            className="contplant"
-                                            type="text"
-                                            id="firstname"
-                                            name="firstname"
-                                        />
-                                    </div>
-                                    {/*Date de début*/}
-                                    <div className="datedebf">
-                                        <label className="labdatedf">Date début : </label>
-                                        <div className="contdate">
-                                            <input className="typedate" type="date" name="bday" />
-                                        </div>
-                                    </div>
-
-                                    {/*Date de fin*/}
-                                    <div className="datedebf">
-                                        <label className="labdatedf">Date de fin : </label>
-                                        <div className="contdate">
-                                            <input className="typedate" type="date" name="bday" />
-                                        </div>
-                                    </div>
-                                </form>
+                        {loading ? (
+                            <div className="parent-container">
+                                <img src="/arosaje-spin.png" className="image-spinner" />
                             </div>
-                            <div className="btnajouplant">
-                                <div className="btnjoutpla">
-                                    <button /*type="submit" */>Envoyer</button>
+                        ) : (
+
+                            <div className="contecaseplante">
+                                <div className="ajouterplante">
+                                    <form className="fomrcontenerplant" onSubmit={(e) => ajouterPlanteAFaireGarder(e, localStorage.getItem("id_utilisateur"))}>
+                                        {/* image*/}
+
+                                        <div className="contpicture">
+                                            <div className="inputnameimg">
+                                                <input
+                                                    type="file"
+                                                    id="firstimg"
+                                                    name="photo"
+                                                    accept="image/*"
+                                                    onChange={modifierPhotoProfil}
+                                                    className="imginput"
+                                                />
+                                                <p id="file-name" color="#B1B1B1"></p>
+                                                <img src={photoPreview} />
+                                            </div>
+                                            <div className="imgiconlable">
+                                                <label for="firstimg" className="labelimg">
+                                                    <PiPlusFill color="#B1B1B1" fontSize={40} />
+                                                </label>
+                                                Ajouter une photo
+                                            </div>
+                                        </div>
+
+                                        {/*nOM*/}
+
+                                        <div className="nomFirsta">
+                                            <label for="plantes" className="selectplant">
+                                                Nom de plante :{" "}
+                                            </label>
+                                            <select name="plantes" id="plantes" value={idPlanteSelectionner} onChange={handlePlanteSelect} className="selectconent">
+                                                {nomPlante.map((plante) => (
+                                                    <option value={plante.id_plante}>{plante.nom_plante}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        {/*Prenom*/}
+
+                                        <div className="nomFirsta">
+                                            <label className="labplant">Message: </label>
+                                            <input
+                                                className="contplant"
+                                                type="text"
+                                                id="message_proprietaire"
+                                                name="message_proprietaire"
+                                                value={planteGarderData.message_proprietaire}
+                                                onChange={handlePlanteGarder}
+                                            />
+                                        </div>
+                                        {/*Date de début*/}
+                                        <div className="datedebf">
+                                            <label className="labdatedf">Date début : </label>
+                                            <div className="contdate">
+                                                <input className="typedate" type="date" id="date_debut" name="date_debut" value={planteGarderData.date_debut}
+                                                    onChange={handlePlanteGarder} />
+                                            </div>
+                                        </div>
+
+                                        {/*Date de fin*/}
+                                        <div className="datedebf">
+                                            <label className="labdatedf">Date de fin : </label>
+                                            <div className="contdate">
+                                                <input className="typedate" type="date" id="date_fin" name="date_fin" value={planteGarderData.date_fin}
+                                                    onChange={handlePlanteGarder} />
+                                            </div>
+                                        </div>
+                                        <div className="btnajouplant">
+                                            <div className="btnjoutpla">
+                                                <button type="submit">Envoyer</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                        </div>
+                        )
+                        }
                     </div>
                 );
 
@@ -759,6 +938,14 @@ const SectionProfil = () => {
                 return (
                     <div className="caselistplante">
                         <p>liste des plante</p>
+                        {loading ? (
+                            <div className="parent-container">
+                                <img src="/arosaje-spin.png" className="image-spinner" />
+                            </div>
+                        ) : (
+                            <ListePlantesAGarder plants={listePlanteDisponibleAFaireGarder} />
+                        )
+                        }
                     </div>
                 );
 
@@ -987,7 +1174,7 @@ const SectionProfil = () => {
                         <li className="nav-item">
                             <div className="icon-link">
                                 <RiLogoutCircleLine color="white" size={30} />
-                                <Link className="itemsP">Déconnecter</Link>
+                                <Link className="itemsP" onClick={deconnexion}>Déconnecter</Link>
                             </div>
                         </li>
                     </ul>
