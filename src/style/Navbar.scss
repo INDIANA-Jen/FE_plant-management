@@ -47,7 +47,8 @@
             //contenu
             .items{
                 font-size: 14px;
-                text-align: none;
+                //text-align: none;
+                text-decoration: none;
                 height: 50%;
                 transition: 1s ease text-decoration;
 
@@ -60,7 +61,6 @@
                     color: $verte;
                 }
             }
-
          
 
         
@@ -94,14 +94,14 @@
         .logo{
           transform:scale(0.8);
           transform: translateY(47px);
-          padding:3px 0px !important; //VARIABLE
+          //padding:3px 0px !important; //VARIABLE
           background: $white;
           width:100%;
           display:flex;
           box-shadow:0px 1px 5px $grey;
   
           //image logo
-          .geroba{
+          .aroseje{
             transform:scale(0.7); //VARIABLE
           }
   
@@ -146,33 +146,13 @@
                 text-decoration:none;
               }
             }
+
+
+            
           }
         }
   
-        //Linkedin & Se connecter 
-        .compte{
-          color: $white;
-          background: $verte;
-          position:fixed;
-          padding:12px 0px; //VARIABLE 
-          top:0;
-          width:100%;
-  
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-end;
-          
-          
-          //linkedin
-          a, .btn-login{
-            margin-right: 20px;
-          }
-  
-          //Se connecter
-          .btn-login{
-            display:none;
-          }
-        }
+        
       }
   
       .show-nav .navcont{
@@ -223,6 +203,32 @@
       }
     }
   }
+
+
+
+//responsive 
+
+//Ecran large 
+@include mediaXl{
+  .header{
+    .nav{
+      height: $headerXl;
+      .navcont{
+        .items{
+          font-size: $fontsizeLg;
+        }
+      }
+      /*.compte{
+        width:18%;
+        .btn-login{
+          margin-right:20px; //VALEUR:marge: alternative? 
+          font-size:15.5px !important;
+        }
+      }*/
+    }
+  }
+}
+
 
 
 //Tablette iPad Mini : ajout icon!!! 
@@ -292,7 +298,8 @@
       }
 
       //Linkedin & Se connecter 
-      .compte{
+     
+     /* .compte{
         color: $white;
         background: $verte;
         position:fixed;
@@ -309,7 +316,7 @@
         a, .btn-login{
           margin-right: 20px;
         }
-      }
+      }*/
     }
 
     .show-nav .navcont{
@@ -428,7 +435,7 @@
       }
 
       //Linkedin & Se connecter 
-      .compte{
+     /* .compte{
         color: $white;
         background: $verte;
         position:fixed;
@@ -444,7 +451,7 @@
         a, .btn-login{
           margin-right: 20px;
         }
-      }
+      }*/
     }
 
     .show-nav .navcont{
@@ -497,28 +504,6 @@
 }
 
 
-//Ecran large 
-@include mediaXl{
-  .header{
-    .nav{
-      height: $headerXl;
-      .navcont{
-        .items{
-          font-size: $fontsizeLg;
-        }
-      }
-      .compte{
-        width:18%;
-        .btn-login{
-          margin-right:20px; //VALEUR:marge: alternative? 
-          font-size:15.5px !important;
-        }
-      }
-    }
-  }
-}
-
-
 //Ecran extra-large
 @include mediaXxl{
   .header{
@@ -533,13 +518,29 @@
           font-size: 30px;
         }
       }
-      .compte{
+
+      .navbar_burger{
+        width: 14px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        color: inherit;
+      }
+
+
+
+      /*.compte{
         width:10%;
         .btn-login{
           margin-right:20px; 
           font-size: 28px !important;
         }
-      }
+      }*/
     }
   }
 }
+
+//fin responsive écran
+
+
+

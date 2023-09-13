@@ -1,10 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import {AiOutlineArrowLeft, AiOutlineArrowRight} from "react-icons/ai";
+//les route 
+import { Link as ScrollLink } from 'react-scroll';
+import { Link as RouterLink } from 'react-router-dom';
+
+//navbar 
+import {Link} from 'react-scroll';
+import {BsArrowUpCircleFill} from 'react-icons/bs'
+
+//chemin ou faire appel le style 
 import '../style/Commun.scss';
 import '../style/Homepage.scss';
 import '../style/Carousel.scss';
+import '../style/Navbar.scss';
+
+// librairie image Carousel 
 import { v4 as uuidv4 } from "uuid";
+
+//liste des Icon 
 import {ParallaxProvider, Parallax} from 'react-scroll-parallax'; 
+import {AiOutlineArrowLeft, AiOutlineArrowRight} from "react-icons/ai";
 import {AiTwotoneHome} from 'react-icons/ai';
 import {GiRotaryPhone, GiScales, GiSmartphone, GiPlantRoots, GiHearts } from 'react-icons/gi';
 import {MdEmail} from 'react-icons/md';
@@ -13,34 +27,38 @@ import { HiOutlineX } from "react-icons/hi";
 import {RiFacebookBoxFill} from "react-icons/ri";
 import {BsCamera} from 'react-icons/bs';
 import {GoDiscussionClosed, GoLocation} from 'react-icons/go';
-import { Link as ScrollLink } from 'react-scroll';
-import { Link as RouterLink } from 'react-router-dom';
 
-import '../style/Navbar.scss'
+
+
+
 
 const SectionText = (props) => {
 
-    const [formVal, setFormVal] = useState({
-        name:'',
-        email:'',
-        object:'',
-        message:''
-      });
+    //Partie contact
 
-      const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormVal((prevFormData) => ({ ...prevFormData, [name]: value }));
-      };
-    
-      const handleSubmit = (event) => {
-        event.preventDefault();
-        alert(`Name: ${formVal.name}, Email: ${formVal.email}, Sujet : ${formVal.object},Message: ${formVal.message}`
-        );
+        const [formVal, setFormVal] = useState({
+            name:'',
+            email:'',
+            object:'',
+            message:''
+        });
 
-      };
+        const handleChange = (event) => {
+            const { name, value } = event.target;
+            setFormVal((prevFormData) => ({ ...prevFormData, [name]: value }));
+        };
+        
+        const handleSubmit = (event) => {
+            event.preventDefault();
+            alert(`Name: ${formVal.name}, Email: ${formVal.email}, Sujet : ${formVal.object},Message: ${formVal.message}`
+            );
 
-        //popup
-        //eto
+        };
+
+    //Fin contact
+
+    //popup Les mentions légales
+        
         const [modal, setModal] = useState(false);
         const toggleModal = (event) => {
             event.preventDefault();
@@ -51,130 +69,179 @@ const SectionText = (props) => {
         } else {
         document.body.classList.remove('active-modal')
         }
-        //atreto
-        //fin popup
 
-        //mois actuel
+    //fin popup Les mentions légales
+
+    //mois et année actuel
             const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre'];
             const currentMonthNum = new Date().getMonth();
             const currentMonth = MONTHS[currentMonthNum];
-
-        //année actuelle 
             const currentYear =  new Date().getUTCFullYear();
 
-    const sliderData = [
-        {
-            id: uuidv4(), /*Cela génère un identifiant unique pour chaque diapositive en utilisant la fonction uuidv4() de la bibliothèque uuid. */
-            image : '/imgC1.jpeg', /* Cette propriété image contient le chemin vers l'image de la diapositive. */
-        },
-        {
-            id: uuidv4(),
-            image : '/imc2.jpeg',    
-        },
-    
-        {
-            id: uuidv4(),
-            image : '/cm3.jpg',
+    //Fin mois et année actuel
+
+    //Carousel  
+        const sliderData = [
+            {
+                id: uuidv4(), /*Cela génère un identifiant unique pour chaque diapositive en utilisant la fonction uuidv4() de la bibliothèque uuid. */
+                image : '/imgC1.jpeg', /* Cette propriété image contient le chemin vers l'image de la diapositive. */
+            },
+            {
+                id: uuidv4(),
+                image : '/imc2.jpeg',    
+            },
+        
+            {
+                id: uuidv4(),
+                image : '/cm3.jpg',
+            }
+        ]
+
+        {/* pour la creation de carousel : pour le diaporama d'images*/ }
+
+        {/*Variables d'état*/ }
+        const [currentSlide, setCurrentSlide] = useState(0); /* "useState" : déclare un état local dans le composant en utilisant le hook et "currentSlide" : la variable qui stocke l'index de la diapositive affichée dans le carrousel, et setCurrentSlideest la fonction utilisée pour mettre à jour cet état. La valeur initiale est définie sur 0, ce qui signifie que la première diapositive sera affichée au début. */
+
+        {/*Variables et paramètres de configuration :*/ }
+        const slideLength = sliderData.length; /* Stocke la longueur totale du tableau sliderData contenant les données des diapositives.*/
+        const autoScroll = true; /* qui dit que le carrousel est configuré, Indique si le défilement automatique est activé (true) ou désactivé (false). */
+        let slideInterval; /* une variable pour stocker la référence à l'intervalle de temps pour défiler automatique les diapositives dans carousel */
+        let intervalTime = 5000; /* variable représente la durée en millisecondes entre chaque transistion automatique de diaspositive dans le carousel, donc tout le 5 secondes une nouvelle diapositive serait affiché */
+
+        {/* fonctions pour la navigation :  */ }
+        {/* une fonction "nextSlide" pour passer à la diapositive suivante et "le prevSlide" le contraire, pour mettre a jours l'etat "currentSlide",   */ }
+        const nextSlide = () => {
+            setCurrentSlide(currentSlide === slideLength - 1 ? 0 : currentSlide + 1); /*Si la diapositive actuelle (currentSlide) est égale à l'index de la dernière diapositive (slideLength - 1), cela signifie que nous sommes sur la dernière diapositive du carrousel. Dans ce cas, la fonction met à jour currentSlide en la réinitialisant à 0, ce qui signifie qu'elle revient à la première diapositive.
+            Sinon, si nous ne sommes pas sur la dernière diapositive, la fonction incrémente simplement currentSlide de 1 pour passer à la diapositive suivante. */
+        };
+
+        const prevSlide = () => {
+            setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1); /* Si la diapositive actuelle (currentSlide) est égale à 0, cela signifie que nous sommes sur la première diapositive du carrousel. Dans ce cas, la fonction met à jour currentSlide en la réglant sur l'index de la dernière diapositive (slideLength - 1), ce qui permet de passer à la dernière diapositive.
+            Sinon, si nous ne sommes pas sur la première diapositive, la fonction décrémente simplement currentSlide de 1 pour revenir à la diapositive précédente.*/
+        };
+
+        {/* Fonction pour le défilement automatique : */ }
+        function auto() {
+            slideInterval = setInterval(nextSlide, intervalTime)
+        } /* fonction "auto" pour activer le défilement automatique des diapositives, fonction "setInterval" pour appeler la fonction nextSlide (qui fait passer à la diapositive suivantes)à intervalles réguliers (intervalTime). Cela crée une boucle où les diapositives changent automatiquement toutes les intervalTime millisecondes.*/
+
+        {/* Effets React (useEffect) :  */ }
+        useEffect(() => {
+            setCurrentSlide(0) /* ce bloc de code utilise le hook"useEffect", Lorsque ce composant est monté (c'est-à-dire lorsqu'il est ajouté à l'interface utilisateur), cette fonction sera exécutée. Elle initialise simplement currentSlide à 0, ce qui garantit que la première diapositive sera affichée  */
+        }, [])
+
+        useEffect(() => {
+            if (autoScroll) {
+                auto();
+            }  /* configuré pour s'éxecuter chaque fois que "currentSlide" change, Il vérifie d'abord si autoScroll est activé. Si oui, il appelle la fonction auto() pour activer le défilement automatique des diapositives. Ensuite, il retourne une fonction de nettoyage qui utilise clearInterval(slideInterval) pour arrêter l'intervalle de défilement lorsque le composant est démonté ou lorsque currentSlide change. */
+
+            return () => clearInterval(slideInterval);
+         }, [currentSlide]);
+
+        {/* Fonction pour le déplacement des points de navigation :  */ }
+
+        const moveDot = index => {
+            setCurrentSlide(index) /* fonction "moveDot" prend argument "index" de la diapositive associée à un point de navigation, quand cette fonction est appelée avec un index, elle met simplement à jour currentSlide avec cet index, ce qui a pour effet de faire passer le carrousel à la diapositive correspondante.
+                En combinant ces éléments, le code crée un carrousel d'images avec des fonctionnalités de défilement manuel et automatique, ainsi que des points de navigation pour sélectionner une diapositive spécifique.
+                */
+                /* moveDot : Met à jour la diapositive actuelle en fonction de l'index passé en argument, ce qui permet de changer la diapositive affichée en cliquant sur les points de navigation. */
         }
-    ]
+    //fin carousel
 
-    {/* pour la creation de carousel : pour le diaporama d'images*/ }
+    {/*burger : Navbar responsive */}
 
-    {/*Variables d'état*/ }
-    const [currentSlide, setCurrentSlide] = useState(0); /* "useState" : déclare un état local dans le composant en utilisant le hook et "currentSlide" : la variable qui stocke l'index de la diapositive affichée dans le carrousel, et setCurrentSlideest la fonction utilisée pour mettre à jour cet état. La valeur initiale est définie sur 0, ce qui signifie que la première diapositive sera affichée au début. */
+           
 
-    {/*Variables et paramètres de configuration :*/ }
-    const slideLength = sliderData.length; /* Stocke la longueur totale du tableau sliderData contenant les données des diapositives.*/
-    const autoScroll = true; /* qui dit que le carrousel est configuré, Indique si le défilement automatique est activé (true) ou désactivé (false). */
-    let slideInterval; /* une variable pour stocker la référence à l'intervalle de temps pour défiler automatique les diapositives dans carousel */
-    let intervalTime = 5000; /* variable représente la durée en millisecondes entre chaque transistion automatique de diaspositive dans le carousel, donc tout le 5 secondes une nouvelle diapositive serait affiché */
+            //montre ou cache bouton haut de page 
+            const [showButton, setShowButton] = useState(false);
 
-    {/* fonctions pour la navigation :  */ }
-    {/* une fonction "nextSlide" pour passer à la diapositive suivante et "le prevSlide" le contraire, pour mettre a jours l'etat "currentSlide",   */ }
-    const nextSlide = () => {
-        setCurrentSlide(currentSlide === slideLength - 1 ? 0 : currentSlide + 1); /*Si la diapositive actuelle (currentSlide) est égale à l'index de la dernière diapositive (slideLength - 1), cela signifie que nous sommes sur la dernière diapositive du carrousel. Dans ce cas, la fonction met à jour currentSlide en la réinitialisant à 0, ce qui signifie qu'elle revient à la première diapositive.
-    Sinon, si nous ne sommes pas sur la dernière diapositive, la fonction incrémente simplement currentSlide de 1 pour passer à la diapositive suivante. */
-    };
+            useEffect(() => {
+                window.addEventListener("scroll", () => {
+                if (window.pageYOffset > 300) {
+                    setShowButton(true);
+                } else {
+                    setShowButton(false);
+                }
+                });
+            }, []);
+            
+            // Boutton scrolling en haut 
+            const scrollToTop = () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth' 
+                });
+            };
 
-    const prevSlide = () => {
-        setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1); /* Si la diapositive actuelle (currentSlide) est égale à 0, cela signifie que nous sommes sur la première diapositive du carrousel. Dans ce cas, la fonction met à jour currentSlide en la réglant sur l'index de la dernière diapositive (slideLength - 1), ce qui permet de passer à la dernière diapositive.
-    Sinon, si nous ne sommes pas sur la première diapositive, la fonction décrémente simplement currentSlide de 1 pour revenir à la diapositive précédente.*/
-    };
+            //Navbar responsive
+            const [showLinks, setShowLinks] = useState(false)
+            const handleShowLink = () => {
+                setShowLinks(!showLinks)
+            }
 
-    {/* Fonction pour le défilement automatique : */ }
-    function auto() {
-        slideInterval = setInterval(nextSlide, intervalTime)
-    } /* fonction "auto" pour activer le défilement automatique des diapositives, fonction "setInterval" pour appeler la fonction nextSlide (qui fait passer à la diapositive suivantes)à intervalles réguliers (intervalTime). Cela crée une boucle où les diapositives changent automatiquement toutes les intervalTime millisecondes.*/
-
-    {/* Effets React (useEffect) :  */ }
-    useEffect(() => {
-        setCurrentSlide(0) /* ce bloc de code utilise le hook"useEffect", Lorsque ce composant est monté (c'est-à-dire lorsqu'il est ajouté à l'interface utilisateur), cette fonction sera exécutée. Elle initialise simplement currentSlide à 0, ce qui garantit que la première diapositive sera affichée  */
-    }, [])
-
-    useEffect(() => {
-        if (autoScroll) {
-            auto();
-        }  /* configuré pour s'éxecuter chaque fois que "currentSlide" change, Il vérifie d'abord si autoScroll est activé. Si oui, il appelle la fonction auto() pour activer le défilement automatique des diapositives. Ensuite, il retourne une fonction de nettoyage qui utilise clearInterval(slideInterval) pour arrêter l'intervalle de défilement lorsque le composant est démonté ou lorsque currentSlide change. */
-
-        return () => clearInterval(slideInterval);
-    }, [currentSlide]);
-
-    {/* Fonction pour le déplacement des points de navigation :  */ }
-
-    const moveDot = index => {
-        setCurrentSlide(index) /* fonction "moveDot" prend argument "index" de la diapositive associée à un point de navigation, quand cette fonction est appelée avec un index, elle met simplement à jour currentSlide avec cet index, ce qui a pour effet de faire passer le carrousel à la diapositive correspondante.
-    En combinant ces éléments, le code crée un carrousel d'images avec des fonctionnalités de défilement manuel et automatique, ainsi que des points de navigation pour sélectionner une diapositive spécifique.
-    */
-        /* moveDot : Met à jour la diapositive actuelle en fonction de l'index passé en argument, ce qui permet de changer la diapositive affichée en cliquant sur les points de navigation. */
-    }
-
+            {/*Fin burger : Navbar responsive */}
 
 
     return (
 
         <>
-        <div className='header' id="header">
-                <div className="nav-content">
-                    <nav className="nav">
-                            {/*logo*/}
-                        <div className="logo">
-                            {/*permet de rafrechir la page par logo*/}
-                            <ScrollLink  to="/#" onClick={() => window.location.reload()}> <img src="/logo.png" className="aroseje" alt="logo"></img></ScrollLink >
-                        </div>
-                        <ul className="navcont">
-                            <li>
-                                <ScrollLink  className='items' activeClass='active' to="home" spy={true} smooth={true} duration={1000} offset={-85}>ACCUEIL</ScrollLink >
-                            </li>
-                            <li>
-                                <ScrollLink  className='items' activeClass='active' to="about" spy={true} smooth={true} duration={1000} offset={-85}>À PROPOS</ScrollLink >
-                            </li>
-                            <li>
-                                <ScrollLink  className='items' activeClass='active' to="fonctions" spy={true}  smooth={true} duration={1000} offset={-85}>FONCTIONS</ScrollLink >
-                            </li>
-                            <li>
-                                <ScrollLink  className='items' activeClass='active' to="demo" spy={true}  smooth={true} duration={1000} offset={-85}>DÉMO</ScrollLink >
-                            </li>
-                            <li>
-                                <ScrollLink  className='items' activeClass='active' to="contact" spy={true}  smooth={true} duration={1000} offset={-85}>CONTACT</ScrollLink >
-                            </li>
-                            <li>
-                                <RouterLink  className='items' to="/inscrires">S'INSCRIRE</RouterLink >
-                            </li>
-                            <li>
-                                <RouterLink  className='items' to="connecters">SE CONNECTER</RouterLink >
-                            </li>
+        {/* Section Navbar */}
+            <div className='header' id="header">
+                    <div className="nav-content">
+                        <nav className={`nav ${showLinks? "show-nav" : "hide-nav"}`}>
+                                {/*logo*/}
+                            <div className="logo">
+                                {/*permet de rafrechir la page par logo*/}
+                                <ScrollLink  to="/#" onClick={() => window.location.reload()}> <img src="/logo.png" className="aroseje" alt="logo"></img></ScrollLink >
+                               
+                                {/*boutton burger responsive */}
+                                <button className='navbar_burger' onClick={handleShowLink}>
+                                    <span className='burger-bar'></span>
+                                </button>
+                            
+                            </div>
 
-                        </ul>
+                            <ul className="navcont">
+                                <li>
+                                    <ScrollLink  className='items' activeClass='active' to="home" spy={true} smooth={true} duration={1000} offset={-85}>ACCUEIL</ScrollLink >
+                                </li>
+                                <li>
+                                    <ScrollLink  className='items' activeClass='active' to="about" spy={true} smooth={true} duration={1000} offset={-85}>À PROPOS</ScrollLink >
+                                </li>
+                                <li>
+                                    <ScrollLink  className='items' activeClass='active' to="fonctions" spy={true}  smooth={true} duration={1000} offset={-85}>FONCTIONS</ScrollLink >
+                                </li>
+                                <li>
+                                    <ScrollLink  className='items' activeClass='active' to="demo" spy={true}  smooth={true} duration={1000} offset={-85}>DÉMO</ScrollLink >
+                                </li>
+                                <li>
+                                    <ScrollLink  className='items' activeClass='active' to="contact" spy={true}  smooth={true} duration={1000} offset={-85}>CONTACT</ScrollLink >
+                                </li>
+                                <li>
+                                    <RouterLink  className='items' to="/inscrires" activeClass='active' >S'INSCRIRE</RouterLink >
+                                </li>
+                                <li>
+                                    <RouterLink  className='items' to="connecters" activeClass='active' >SE CONNECTER</RouterLink >
+                                </li>
 
-                    </nav>
+                            </ul>
 
+                        </nav>
 
+                    </div>
 
-                </div>
+                    {/* permet de remonter en haut  */}
+
+                    {showButton && (
+                    <Link to="/#" onClick={scrollToTop} className="btn-top">
+                        <BsArrowUpCircleFill size="32px" color="#87C954"/>
+                    </Link>
+        )}
 
             </div>
+        {/* Fin Section Navbar */}
 
-            {/* SECTION ACCEUIL */}
+        {/* Section Carousel */}
             <div id="home">
                 <div className='slider'>
 
@@ -241,6 +308,11 @@ const SectionText = (props) => {
                         ))}
                     </div>
                 </div>
+
+        {/* Fin Section Carousel */}
+
+        {/* Image paralax de : Solution d'entretien de leurs plantes */}
+
                 <div className="sectionContainer">
                     {/* Image avec Parallax */}
                     <div className="sectionImage">
@@ -289,329 +361,320 @@ const SectionText = (props) => {
                     </div>
                 </div>
             </div>
+        {/* Fin Image paralax de : Solution d'entretien de leurs plantes */}
 
-            {/* SECTION A PROPOS */}
-            <div className="sectionContainer" id="about">
-            <div className="sectionText">
-                <h1 className="title" >
-                    Comment ça marche?
-                </h1>
-                <p className="paragraph">
-                    Comme nous venons de le voir, l'application permet 
-                    aux utilisateurs de demander à quelqu'un d'autre de 
-                    conserver leurs plantes et aux botanistes de donner 
-                    des conseils. Donc, l'application dispose d'un appareil 
-                    photo enfin que les utilisateurs prendre des photos des plantes qu'ils souhaitent garder.
-                </p>
-                <p className="paragraph">
-                    Les photos permettent aux botanistes de donner les 
-                    conseils les plus appropriés à l'utilisateur qui 
-                    conservera les plants. Afin de s'assurer que les 
-                    plantes conservées sont en bon état lorsqu'elles 
-                    sont manipulées par un autre utilisateur, ce dernier 
-                    devra prendre des photos après chaque séance de maintenance.
-                    Les utilisateurs (propriétaires et gardiens) pourront 
-                    communiquer entre eux pour coordonner le soin des 
-                    plantes. 
-                </p>
-                
-                <p className="paragraph">
-                    L'application permet aussi aux utilisateurs de visionner leurs 
-                    profils contenant des photos de plantes qu'ils ont 
-                    conservées ou qu'ils avaient conservées et cela permet 
-                    aux botanistes de chercher des plantes d'intérêt afin 
-                    de rédiger des conseils d'entrevue pour les plantes.
-                </p>
-                
-            </div>
-
-            <div className="sectionImage">
-                <ParallaxProvider>
-                    <Parallax translateX={['200px', '-40px']}> 
-                        <img src="/pot2.avif" alt="Tablette avec carte"/>
-                    </Parallax>
-
-                </ParallaxProvider>             
-            </div>
-        </div>
-
-        {/* SECTION FONCTION */}
-
-        <div className="fonc" id="fonctions">
-
-             <h1 className="titlefon">
-                
-                Fonctionnalités
-
-            </h1>
-
-            <div className="SectionContFonc">
-
+        {/*Section apropos */}
             
-
-                   
-
-                    <div className="fonction">
-
-                        <GiSmartphone color="#87C954" size={50} />
-                        <BsCamera color="#87C954" size={50}/>
-                        <GiPlantRoots color="#87C954" size={50}/>
-                      
-                        <div className="titreIcon">
-                            <p>
-                                Prendre de photo et partage
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <div className="fonction">
+            <div className="sectionContainer" id="about">
+                <div className="sectionText">
+                    <h1 className="title" >
+                        Comment ça marche?
+                    </h1>
+                    <p className="paragraph">
+                        Comme nous venons de le voir, l'application permet 
+                        aux utilisateurs de demander à quelqu'un d'autre de 
+                        conserver leurs plantes et aux botanistes de donner 
+                        des conseils. Donc, l'application dispose d'un appareil 
+                        photo enfin que les utilisateurs prendre des photos des plantes qu'ils souhaitent garder.
+                    </p>
+                    <p className="paragraph">
+                        Les photos permettent aux botanistes de donner les 
+                        conseils les plus appropriés à l'utilisateur qui 
+                        conservera les plants. Afin de s'assurer que les 
+                        plantes conservées sont en bon état lorsqu'elles 
+                        sont manipulées par un autre utilisateur, ce dernier 
+                        devra prendre des photos après chaque séance de maintenance.
+                        Les utilisateurs (propriétaires et gardiens) pourront 
+                        communiquer entre eux pour coordonner le soin des 
+                        plantes. 
+                    </p>
                 
-                        <FaHands color="#87C954" size={50}/> 
-                        <GiPlantRoots color="#87C954" size={50}/>
-                        <GoLocation color="#87C954" size={50}/>
+                    <p className="paragraph">
+                        L'application permet aussi aux utilisateurs de visionner leurs 
+                        profils contenant des photos de plantes qu'ils ont 
+                        conservées ou qu'ils avaient conservées et cela permet 
+                        aux botanistes de chercher des plantes d'intérêt afin 
+                        de rédiger des conseils d'entrevue pour les plantes.
+                    </p>
+                
+                </div>
 
+                <div className="sectionImage">
+                    <ParallaxProvider>
+                        <Parallax translateX={['200px', '-40px']}> 
+                            <img src="/pot2.avif" alt="Tablette avec carte"/>
+                        </Parallax>
+
+                    </ParallaxProvider>             
+                </div>
+            </div>
+        {/* Fin Section apropos */}
+
+        {/*Fonctionnalités*/}
+            <div className="fonc" id="fonctions">
+
+                <h1 className="titlefon">
+                
+                    Fonctionnalités
+
+                </h1>
+
+                <div className="SectionContFonc">
+                        <div className="fonction">
+
+                            <GiSmartphone color="#87C954" size={50} />
+                            <BsCamera color="#87C954" size={50}/>
+                            <GiPlantRoots color="#87C954" size={50}/>
                       
-                        <div className="titreIcon">
-                            <p>
-                                Garder les plantes et localisation
+                            <div className="titreIcon">
+                                <p>
+                                    Prendre de photo et partage
+                                </p>
+                            </div>
 
-                            </p>
-                            
                         </div>
-                    </div>
 
-                    <div className="fonction">
-                        
-                        <GoDiscussionClosed color="#87C954" size={50}/>
-                        <GiHearts color="#87C954" size={50}/>
-                        <GiPlantRoots color="#87C954" size={50}/>
-                        <div className="titreIcon">
-                            <p>
-                                Conseil d'entretien et santé des plantes
-                            </p>
+                        <div className="fonction">
+                
+                            <FaHands color="#87C954" size={50}/> 
+                            <GiPlantRoots color="#87C954" size={50}/>
+                            <GoLocation color="#87C954" size={50}/>
+
+                            <div className="titreIcon">
+                                <p>
+                                    Garder les plantes et localisation
+
+                                </p>
                             
+                            </div>
+                        </div>
+
+                        <div className="fonction">
+                        
+                            <GoDiscussionClosed color="#87C954" size={50}/>
+                            <GiHearts color="#87C954" size={50}/>
+                            <GiPlantRoots color="#87C954" size={50}/>
+                            <div className="titreIcon">
+                                <p>
+                                    Conseil d'entretien et santé des plantes
+                                </p>
+                            
+                            </div>
                         </div>
                     </div>
             </div>
+        {/* Fin Fonctionnlité  */}
 
-        </div>
 
-        {/* SECTION DEMO */}
-        <div className='sectiondemo' id="demo">       
-                <h1 className="titleDemo">
-                    Démo
-                </h1>
-                {/* Video demonstration */}
-                <div className="video-container" id="videodemo">
-                     {/* Si la vidéo est enregistrée localement */}
-                    <video className="videoDemo" width="640" height="264" controls
-                        src="/videoPlant.mp4" type="video/mp4">
-                    </video>
+        {/* Section DEMO */}
+            <div className='sectiondemo' id="demo">       
+                    <h1 className="titleDemo">
+                        Démo
+                    </h1>
+                    {/* Video demonstration */}
+                    <div className="video-container" id="videodemo">
+                        {/* Si la vidéo est enregistrée localement */}
+                        <video className="videoDemo" width="640" height="264" controls
+                            src="/videoPlant.mp4" type="video/mp4">
+                        </video>
                             {/* Si la vidéo est en ligne 
                             <iframe 
                             src= "https://www.youtube.com/watch?v=9TfFyHI-GXc"
                             className="videoDemo"
                             title="Geroba demonstration"
                             /> */}
-                </div>
-        </div>
+                    </div>
+            </div>
+        {/* Fin  Section DEMO */}
 
-        {/* SECTION PARTENAIRE */}
+        {/* Section PARTENAIRE */}
 
-        <div className='Partenaire'>
+            <div className='Partenaire'>
 
-            <h1 className='titlePartenaire'>
-                Nos partenaires
+                <h1 className='titlePartenaire'>
+                    Nos partenaires
                 
-            </h1>
+                </h1>
 
-            <div className='ContenerPart'>
+                <div className='ContenerPart'>
 
-                <div className='ToutPartenaire'>
+                    <div className='ToutPartenaire'>
+                        <a href='https://www.tela-botanica.org/'>
+                            <img src='/parte1.png' className='perte'></img>
+                        </a> 
+                    </div>
 
-                    <a href='https://www.tela-botanica.org/'>
-                        <img src='/parte1.png' className='perte'></img>
+                    <div className='ToutPartenaire'>
+                        <a href='https://www.tec.ac.cr/'>
+                            <img src='/parte2.png' className='perte'></img>
+                        </a>
+                     </div>
 
-                    </a>
-                     
-                </div>
-                <div className='ToutPartenaire'>
-                    <a href='https://www.tec.ac.cr/'>
-                        <img src='/parte2.png' className='perte'></img>
+                    <div className='ToutPartenaire'>
+                        <a href='https://www.guadeloupe-parcnational.fr/fr'>
+                            <img src='/parte3.png' className='perte'></img>
+                        </a>                  
+                    </div>
 
-                    </a>
-                   
-                </div>
-                <div className='ToutPartenaire'>
-                    <a href='https://www.guadeloupe-parcnational.fr/fr'>
-                        <img src='/parte3.png' className='perte'></img>
-
-                    </a>
+                    <div className='ToutPartenaire'>
+                        <a href='https://www.imageclef.org/lifeclef/2017'>
+                            <img src='/parte4.png' className='perte'></img>
+                        </a>
                     
-                </div>
-                <div className='ToutPartenaire'>
-                    <a href='https://www.imageclef.org/lifeclef/2017'>
-                        <img src='/parte4.png' className='perte'></img>
+                    </div>
 
-                    </a>
-                    
-                </div>
-                <div className='ToutPartenaire'>
-                    <a href='https://www.cjbg.ch/'>
-                        <img src='/parte5.png' className='perte'></img>
+                    <div className='ToutPartenaire'>
+                        <a href='https://www.cjbg.ch/'>
+                            <img src='/parte5.png' className='perte'></img>
+                        </a>  
+                    </div>
 
-                    </a>
-                    
-                </div>
-                <div className='ToutPartenaire'>
-                    <a href='https://tropicalstudies.org/'>
-                        <img src='/parte6.png' className='perte'></img>
+                    <div className='ToutPartenaire'>
+                        <a href='https://tropicalstudies.org/'>
+                            <img src='/parte6.png' className='perte'></img>
+                        </a>         
+                    </div>
 
-                    </a>
-                    
-                </div>
-                <div className='ToutPartenaire'>
-                    <a href='https://www.lewa.org/'>
-                        <img src='/parte7.png' className='perte'></img>
+                    <div className='ToutPartenaire'>
+                        <a href='https://www.lewa.org/'>
+                            <img src='/parte7.png' className='perte'></img>
+                        </a>
+                    </div>
 
-                    </a>
-                   
-                </div>
-                <div className='ToutPartenaire'>
-                    <a href='https://endemia.nc/'>
-                        <img src='/parte8.png' className='perte'></img>
+                    <div className='ToutPartenaire'>
+                        <a href='https://endemia.nc/'>
+                            <img src='/parte8.png' className='perte'></img>
+                    </a>               
+                    </div>
 
-                    </a>
-                   
+                    <div className='ToutPartenaire'>
+                        <a href='https://eol.org/'>
+                            <img src='/parte10.png' className='perte'></img>
+                        </a>  
+                    </div>
                 </div>
-                <div className='ToutPartenaire'>
-                    <a href='https://eol.org/'>
-                        <img src='/parte10.png' className='perte'></img>
-
-                    </a>
-                     
-                </div>
-
 
             </div>
 
-            
+        {/* Fin Section PARTENAIRE */}
 
-        </div>
+        {/* Section CONTACT */}
+            <div className='FooterContact'>
 
-        {/* SECTION CONTACT */}
-        <div className='FooterContact'>
+                    <div className='SectionContact' id='contact'>
 
-                <div className='SectionContact' id='contact'>
+                        <h1 className='titleContact'>
+                            Contactez-nous
 
-                    <h1 className='titleContact'>
-                        Contactez-nous
+                        </h1>
 
-                    </h1>
+                        <div className='FormContact'>
 
-                    <div className='FormContact'>
+                            <form className='ContactContainer' onSubmit={handleSubmit}>
+                                {/* Nom */}
+                                <div>
+                                    <label htmlFor='name'>VOTRE NOM (OBLIGATOIRE)</label>
+                                    <input 
+                                        type="text" 
+                                        id="name" 
+                                        name="name" 
+                                        defaultValue={formVal.name}
+                                        onChange={handleChange}
+                                        required="required"
 
-                        <form className='ContactContainer' onSubmit={handleSubmit}>
-                            {/* Nom */}
-                            <div>
-                                <label htmlFor='name'>VOTRE NOM (OBLIGATOIRE)</label>
-                                <input 
-                                    type="text" 
-                                    id="name" 
-                                    name="name" 
-                                    defaultValue={formVal.name}
-                                    onChange={handleChange}
-                                    required="required"
-
-                                />
+                                    />
                             
                                 
-                            </div>
+                                </div>
 
-                            {/* email */}
-                            <div>
-                                <label htmlFor="email">VOTRE EMAIL (OBLIGATOIRE)</label>
-                                <input
+                                {/* email */}
+                                <div>
+                                    <label htmlFor="email">VOTRE EMAIL (OBLIGATOIRE)</label>
+                                    <input
 
-                                    type="email" 
-                                    id="email" 
-                                    name="email"
-                                    defaultValue={formVal.email} 
-                                    onChange= {handleChange} 
-                                    required="required"
+                                        type="email" 
+                                        id="email" 
+                                        name="email"
+                                        defaultValue={formVal.email} 
+                                        onChange= {handleChange} 
+                                        required="required"
                                 
-                                />
+                                     />
+                                </div>
 
-                            </div>
-                            {/*Sujet*/}
-                            <div>
-                                <label htmlFor="email">SUJET OBLIGATOIRE</label>
-                                <input 
-                                    type="text" 
-                                    id="object" 
-                                    name="object" 
-                                    defaultValue={formVal.name}
-                                    onChange={handleChange}
-                                    required="required"
-                                />
+                                {/*Sujet*/}
+                                <div>
+                                    <label htmlFor="email">SUJET OBLIGATOIRE</label>
+                                    <input 
+                                        type="text" 
+                                        id="object" 
+                                        name="object" 
+                                        defaultValue={formVal.name}
+                                        onChange={handleChange}
+                                        required="required"
+                                    />
                                 
-                            </div>
-                            {/* message */}
-                            <div>
-                                <label htmlFor="message">VOTRE MESSAGE (OBLIGATOIRE) </label>
-                                <textarea
-                                    name='message' 
-                                    placeholder=" " 
-                                    onChange={handleChange} 
-                                    required="required"
-                                />
-                            </div>                            
-                            <div>
-                                <button type="submit">
-                                    ENVOYER
-                                </button>
-                            </div>                           
-                        </form>
-                        <div className='TextContact'>
-                            <div className='titreContact'>
-                                <p>
-                                    Envie de démarrer un projet ou microprojet avec A'Rosa-je?
-                                </p>
-                                <p>
-                                    Une idée de partenariat ?
-                                </p>
-                                <p>
-                                    Ou tout simplement, une question ?
-                                </p>
-                            </div>
+                                </div>
+                                {/* message */}
+                                <div>
+                                    <label htmlFor="message">VOTRE MESSAGE (OBLIGATOIRE) </label>
+                                    <textarea
+                                        name='message' 
+                                        placeholder=" " 
+                                        onChange={handleChange} 
+                                        required="required"
+                                    />
+                                </div> 
+                                {/* Button envoyer  */}                           
+                                <div>
+                                    <button type="submit">
+                                        ENVOYER
+                                    </button>
+                                </div>                           
+                            </form>
+                        
+                            <div className='TextContact'>
+                                <div className='titreContact'>
+                                    <p>
+                                        Envie de démarrer un projet ou microprojet avec A'Rosa-je?
+                                    </p>
+                                    <p>
+                                        Une idée de partenariat ?
+                                    </p>
+                                    <p>
+                                        Ou tout simplement, une question ?
+                                    </p>
+                                </div>
                             
-                            <div className="contact-info">
-                                    <p><AiTwotoneHome color="#87C954" /> : 81 rue du Moulin, 46140 SAUZET, France.</p>
-                                    <p><GiRotaryPhone color="#87C954"/> : +33 (0) 6 31 89 80 34</p>
-                                    <p><MdEmail color="#87C954"/> : contact@gerobamaster.fr</p>
-                                    <p><FaGlobe color="#87C954"/> : www.geroba.fr</p>
+                                <div className="contact-info">
+                                    <p><AiTwotoneHome color="#87C954" /> : 188 Avenue de Fronton, Toulouse, France.</p>
+                                    <p><GiRotaryPhone color="#87C954"/> : +33 (0) 7 32 90 81 35</p>
+                                    <p><MdEmail color="#87C954"/> : contact@Arosaje.fr</p>
+                                    <p><FaGlobe color="#87C954"/> : www.Arosaje.fr</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className='reseau'>
-                    <div className='titreReseau'>
-                        <p>
-                            RETROUVEZ-NOUS SUR
-                        </p>
-                    </div>                  
-                    <div className='iconResau'>
-                        <RiFacebookBoxFill color='#fff' size={34} />
-                        <FaInstagram color='#fff' size={34} />
-                        <FaYoutubeSquare color='#fff' size={34} />
+                    {/* reseaux sociaux  */}
+                    <div className='reseau'>
+                        <div className='titreReseau'>
+                            <p>
+                                RETROUVEZ-NOUS SUR
+                            </p>
+                        </div>                  
+                        <div className='iconResau'>
+                            <RiFacebookBoxFill color='#fff' size={34} />
+                            <FaInstagram color='#fff' size={34} />
+                            <FaYoutubeSquare color='#fff' size={34} />
 
-                    </div>
+                        </div>
                  
-                </div>
+                    </div>
+
+                    {/* Mention legal */}
                     <div className='mention'>
-                    <p onClick={toggleModal} className="openFonction"><GiScales />  
-                    <i>Les mentions légales-Politique de Sécurisation des Données</i></p>
+                        <p onClick={toggleModal} className="openFonction"><GiScales />  
+                        <i>Les mentions légales-Politique de Sécurisation des Données</i></p>
                     <div>
                     {modal && (
                         
@@ -641,7 +704,7 @@ const SectionText = (props) => {
                                             a une demande spécifique (signaler un contenu illicite, demander le retrait d’une information jugée attentatoire à la vie privée…).
 
                                             </p>
-                                <p className="lightTitle">2. Quelles sont les différentes mentions légales à faire figurer sur mon site ?</p>
+                                            <p className="lightTitle">2. Quelles sont les différentes mentions légales à faire figurer sur mon site ?</p>
                                             <p className='mentcont'>
                                             Pour déterminer quelles informations l’éditeur est tenu de faire paraitre sur son site, il faut 
                                             distinguer selon qu’il agit à titre professionnel ou non-professionnel. De même, les informations varient si l’éditeur est 
@@ -764,18 +827,19 @@ const SectionText = (props) => {
                                             </p>
                                         </div>
                                         <button className="close-modal" onClick={toggleModal}>
-                                        <HiOutlineX />
+                                            <HiOutlineX />
                                         </button>   
-                            </div>
-                    </div>)}
+                                </div>
+                        </div>)}
                     </div> 
                 </div>
 
+               {/* footer date et heure */}
                 <div className="footerRow2">
                         <p><i>Conçu et développé par  &nbsp;&nbsp; <img className="footerLogo" src="logo.png" alt="gds group"></img> &nbsp;&nbsp; Tous droits réservés &copy; {} {currentMonth} {currentYear}</i></p>
 
                 </div>
-       </div>
+        </div>
         </>
     )
 

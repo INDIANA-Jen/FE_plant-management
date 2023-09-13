@@ -6,15 +6,48 @@
     //background-color: red;
     .casprofil {
         position: absolute;
-        // background-color: red;
-        left: 450px;
+        //background-color: red;
+        left: 500px;
         right: 0;
         top: 0; //permet de tiré le contenu en haut 
-        height: 100vh;
+        //height: 100vh;
+       // height: 100px;
 
         .titleprofil {
             font-size: 30px;
             color: black;
+            //background-color: red;
+        }
+
+        .contenuchangeP{
+           // background-color: red;
+
+                .photochange{
+                    //background-color: red;
+                    //width: 400px;
+                    height: 240px;
+
+
+                    .imgChangephoto{
+                        //background-color: red;
+                        width: 130px;
+
+                      }  
+                }
+
+                .contenentpropchange{
+                    //background-color: blue;
+                    margin: 10px 0; //permet de descendre ou monter le contenu 
+                }
+
+                .contenentpropchange span{
+                    display: block;
+                    margin: 10px 0; //espace entre les contenu
+                    
+                }
+
+           
+
         }
 
         .contenerBtn {
@@ -24,11 +57,11 @@
             gap: 10px;
             //background-color: blue;
             width: 48%;
-            margin-left: 1px;
+            //margin-left: 1px;
             //height: 20px;
-            //left: 100px;
-            margin-top: 520px; // tire le contenu vers le bas 
-
+            right: 25px;
+            margin-top: 100px; // tire le contenu vers le bas 
+            position: relative;
 
             .Btnp {
 
@@ -90,14 +123,19 @@
         }
     }
 
+//mes plantes 
+
     .casemesplantes {
 
         position: absolute;
-        // background-color: red;
+        //background-color: red;
+       // background-color: $grey;
         left: 450px;
         right: 0;
         top: 0; //permet de tiré le contenu en haut 
-        height: 100vh;
+        //height: 100vh;
+        height: 739px;
+        overflow: scroll;
 
         .titlemesplantes {
             color: black;
@@ -123,36 +161,143 @@
             /* Add padding as needed */
         }
 
-        .plant-item {
-            width: calc(33.33% - 20px);
 
-            .submit-button,
-            .delete-button {
-                padding: 10px 20px;
-                border: none;
-                cursor: pointer;
-            }
+        .plantitem-center{
 
-            .submit-button {
-                background-color: $verte;
-                color: white;
-                margin-right: 10px;
-            }
+            //background-color: red;
+            //background-color: blue;
+            background-color: $greyfon;
+            width: 320px;
 
-            .delete-button {
-                background-color: #ccc;
-                color: #333;
-            }
 
-            .submit-button:hover {
-                background-color: #34CB42;
+            .plant-item p{
+                font-size: initial;
+                height: initial;
+                color: initial;
+                margin-bottom: initial;
+                display: flex;
+                align-items: start;
+                justify-content: start;
+                padding: initial;
+                //color: black;
             }
+    
+                
+    
 
-            .delete-button:hover {
-                background-color: #999;
+            .plant-item {
+
+                .imgmesplant{
+                    display: flex;
+                    position: relative;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .mesplantnom, .mesplanttype, .mesplantedescription{
+
+                    //display: flex;
+                    position: relative;
+                    //justify-content: center;
+                    //align-items: center;
+                    left: 10px;
+                    right: 10px;
+                    width: 300px;
+                }
+
+                .mesplantedescription{
+
+                    border: 1px solid #a2f379;
+                    width: 300px;
+                    height: 100px;
+                    //overflow: scroll;
+                    //overflow-wrap: break-word;
+                    //display: inline-block;
+                    margin-top: 20px ;
+                    
+                    
+
+                
+                }
+
+               /* p{
+                    background-color: red;
+                    position: relative;
+                    display: flex;
+                    justify-content: left;
+                    align-items: left;
+                    /*position: absolute;
+                    //align-items: center;
+                    //justify-content: center;
+                    //left: 200px;
+                    width: 300px;
+                    height: 300px;
+                    
+                }
+                */
+    
+                
+                .deuxmodsup{
+    
+                    display: flex;
+                    //background-color: red;
+                    //align-items: center;
+                    gap: 10px;
+                    //background-color: blue;
+                    width: 48%;
+                    //margin-left: 1px;
+                    //height: 20px;
+                    //right: 0px;
+                    left: 50px;
+                    margin-top: 50px; // tire le contenu vers le bas 
+                    position: relative;
+                    //height: 10px;
+    
+                    .modifbutton .supbutton{
+                        width: 200px;
+                        position: relative;
+                        display: flex;
+                        left: 20px;
+                        height: 50px;
+    
+                    }
+    
+                    .submit-button,
+                .delete-button {
+                    padding: 10px 20px;
+                    border: none;
+                    cursor: pointer;
+                }
+    
+                .submit-button {
+                    background-color: $verte;
+                    color: white;
+                    margin-right: 10px;
+                }
+    
+                .delete-button {
+                    background-color: #ccc;
+                    color: #333;
+                }
+    
+                .submit-button:hover {
+                    background-color: #34CB42;
+                }
+    
+                .delete-button:hover {
+                    background-color: #999;
+                }
+    
+    
+                }
+    
+    
             }
+    
+
         }
 
+        
 
         .contbtnPlante {
 
@@ -228,7 +373,11 @@
 
     }
 
-    .caseplantegarde {
+    //fin mes plantes 
+
+
+
+    /*.caseplantegarde {
 
         position: absolute;
         //background-color: red;
@@ -237,12 +386,15 @@
         top: 0; //permet de tiré le contenu en haut 
         height: 739px;
 
-    }
+    }*/
+
+
+ //plante que je garde    
 
     .caseajoutplante {
 
         position: absolute;
-        // background-color: red;
+        //background-color: red;
         left: 450px;
         right: 0;
         top: 0; //permet de tiré le contenu en haut 
@@ -250,29 +402,39 @@
 
 
         .titlejoutpante {
-            font-size: 20px;
+            font-size: 30px;
             color: black;
+            margin-bottom: 30px;
+            //background-color: red;
         }
 
-        .plant-list {
+        /*.planteQjegardere{
+            //background-color: red;
+            position: relative;
+            display: flex;
+        }*/
+
+        //.parent-container
+
+        /*.plant-list {
             position: absolute;
             left: 0px;
             right: 0;
             height: 100vh;
             // overflow-y: auto;
             /* Enable vertical scrolling when needed */
-            display: flex;
-            flex-wrap: wrap;
+            //display: flex;
+           // flex-wrap: wrap;
             /* Allow items to wrap to the next line */
-            justify-content: flex-start;
+            //justify-content: flex-start;
             /* Start items from the left */
-            gap: 20px;
+            //gap: 20px;
             /* Adjust the gap between items */
-            padding: 20px;
+            //padding: 20px;
             /* Add padding as needed */
-        }
+       // }
 
-        .plant-item {
+        /*.plant-item {
             width: calc(33.33% - 20px);
 
             .submit-button,
@@ -300,8 +462,11 @@
             .delete-button:hover {
                 background-color: #999;
             }}
+*/
 
-        .contecaseplante {
+       
+
+   .contecaseplante {
 
             //background-color: rgb(44, 153, 79);
 
@@ -452,7 +617,7 @@
                         width: 560px;
                         position: relative;
                         //position: absolute;
-                        left: 30px;
+                        left: 0px;
 
                         .labplant {
 
@@ -464,10 +629,11 @@
                             line-height: 26px;
                            //margin-bottom: 10px;*/
                             display: inline-block;
-                            width: 70px;
+                            width: 110px;
                             text-align: right;
                             margin-bottom: 10px;
                             line-height: 40px;
+                            //background-color: red;
 
 
                         }
@@ -575,63 +741,189 @@
 
     }
 
-    .caselistplante {
+.plantlistQgarde{
+    //background-color: red;
+    position: relative;
+    display: flex;
+    //justify-content: center;
+    //align-items: center;
+     left: 20px;
+     right: 20px;
+     width: 96%;
+}
 
-        position: absolute;
-        // background-color: red;
-        left: 450px;
-        right: 0;
-        top: 0; //permet de tiré le contenu en haut 
-        height: 100vh;
+.plantQgarde{
 
-        .plant-list {
-            position: absolute;
-            left: 0px;
-            right: 0;
-            height: 100vh;
-            // overflow-y: auto;
-            /* Enable vertical scrolling when needed */
+    .contentplantQG{
+        //background-color: blue;
+        margin-bottom: 20px;
+
+        p{
+           /* font-size: 18px;
             display: flex;
-            flex-wrap: wrap;
-            /* Allow items to wrap to the next line */
-            justify-content: flex-start;
-            /* Start items from the left */
-            gap: 20px;
-            /* Adjust the gap between items */
-            padding: 20px;
-            /* Add padding as needed */
+            position: relative;
+            left: 10px;
+            margin-bottom: 10px;*/
+            font-size: 18px;
+                color: black;
+                position: relative;
+                display: flex;
+                justify-content: left;
+                right: 20px;
+                //margin-top: 5px;
+                //line-height: 10px;
+                //margin: 5px;
+                padding: 25px;
         }
+    }
 
-        .plant-item {
-            width: calc(33.33% - 20px);
+    .btnentretien{
 
-            .submit-button,
-            .delete-button {
+      
+
+            .Btnsubentre{
                 padding: 10px 20px;
                 border: none;
                 cursor: pointer;
+                //margin-bottom: 50px;
             }
 
-            .submit-button {
+            .Btnsubentre{
                 background-color: $verte;
                 color: white;
                 margin-right: 10px;
             }
 
-            .delete-button {
-                background-color: #ccc;
-                color: #333;
-            }
-
-            .submit-button:hover {
+            .Btnsubentre:hover {
                 background-color: #34CB42;
             }
 
-            .delete-button:hover {
-                background-color: #999;
+
+        
+    }
+
+
+}
+
+//fin plante que je garde    
+
+
+//liste des plante à conserver 
+
+    .caselistplante {
+
+        position: absolute;
+        //background-color: red;
+        left: 450px;
+        right: 0;
+        top: 0; //permet de tiré le contenu en haut 
+        height: 100vh;
+
+        .titlecaselist{
+            color: black;
+            //font-size: 12;
+            //background-color: red;
+            margin-bottom: 50px;
+        }
+
+        /*.plant-list {
+            position: absolute;
+            left: 0px;
+            right: 0;
+            height: 100vh;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 20px;
+            padding: 20px;
+            
+        }*/
+
+        /*.plant-item {
+            width: calc(33.33% - 20px);*/
+
+            .gardenBtn{
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
             }
+
+            .gardenBtn{
+                background-color: $verte;
+                color: white;
+                margin-right: 10px;
+            }
+
+            .gardenBtn:hover {
+                background-color: #34CB42;
+            }
+
+          
         }
     }
+
+    .plan-list-garde{
+        background-color: yellow;
+    }
+
+    .planteListegarde{
+        //background-color: red;
+        width: 97%;
+        position: relative;
+        display: block;
+        left: 20px;
+
+        .listrecplant{
+            //background-color: blue;
+           
+            p{
+                font-size: 18px;
+                color: black;
+                position: relative;
+                display: flex;
+                justify-content: left;
+                right: 20px;
+                //margin-top: 5px;
+                //line-height: 10px;
+                //margin: 5px;
+                padding: 25px;
+            }
+
+            .listnom,
+            .listprenom, 
+            .listmessage,
+            .listdatedebut, 
+            .listdatefin {
+                
+                /*position: relative;
+                display: flex;
+                justify-content: left;
+                right: 30px;*/
+                //line-height: 0px;
+                margin-bottom: 0px;
+                //background-color: red;
+                //height: 60px;
+                //display: inline-block;
+                position: relative;
+                //margin-bottom: 5%;
+                
+                
+            }
+
+            /*.gardenBtnplnate{
+
+               background-color: red;
+               width: 100px;
+
+
+            }*/
+
+           
+        }
+    }
+
+//case liste de plante a conserver 
+
 
     .casemessage {
 
@@ -655,72 +947,135 @@
 
     }
 
+ //conseil botaniste    
+
     .casebotanistecons {
         position: absolute;
-        // background-color: red;
+        //background-color: red;
         left: 450px;
         right: 0;
         top: 0; //permet de tiré le contenu en haut 
         height: 100vh;
+        overflow: scroll;
 
         .titlebota {
             color: black;
         }
 
-        .plant-list {
-            position: absolute;
-            left: 0px;
-            right: 0;
-            height: 100vh;
-            // overflow-y: auto;
-            /* Enable vertical scrolling when needed */
-            display: flex;
-            flex-wrap: wrap;
-            /* Allow items to wrap to the next line */
-            justify-content: flex-start;
-            /* Start items from the left */
-            gap: 20px;
-            /* Adjust the gap between items */
-            padding: 20px;
-            /* Add padding as needed */
+        
+    }
+
+
+    .plant-listConseil{
+        position: absolute;
+        left: 0px;
+        right: 0;
+        height: 100vh;
+        // overflow-y: auto;
+        /* Enable vertical scrolling when needed */
+        display: flex;
+        flex-wrap: wrap;
+        /* Allow items to wrap to the next line */
+        justify-content: flex-start;
+        /* Start items from the left */
+        gap: 20px;
+        /* Adjust the gap between items */
+        padding: 20px;
+        /* Add padding as needed */
+    }
+
+  
+    .contenerConsBotan{
+            //background-color: red;
+            //background-color: blue;
+            background-color: $greyfon;
+            width: 320px;
+
+        .conseilBotan p {
+
+                font-size: initial;
+                height: initial;
+                color: initial;
+                margin-bottom: initial;
+                display: flex;
+                align-items: start;
+                justify-content: start;
+                padding: initial;
+                //color: black;
+               // background-color: red;
+            
         }
 
-        .plant-item {
-            width: calc(33.33% - 20px);
+        .consnom, .constype, .consmessage, .consbot, .consdateD, .consdateF{
 
-            .submit-button,
-            .delete-button {
+             //display: flex;
+             position: relative;
+             //justify-content: center;
+             //align-items: center;
+             left: 10px;
+             right: 10px;
+             width: 300px;
+             margin-top: 10px;
+
+
+        }
+
+        .conseilBotan{
+
+            .imgconsbotans{
+                display: flex;
+                position: relative;
+                align-items: center;
+                justify-content: center;
+                margin-top: 20px;
+                //height: 10px;
+            }
+        }
+
+        .conseilbotanBTN{
+            width: calc(33.33% - 20px);
+            //background-color: red;
+            position: relative;
+            display: flex;
+            width: 160px;
+            left: 80px;
+            margin-top: 40px;
+            
+    
+            .submiCons {
+                
                 padding: 10px 20px;
                 border: none;
                 cursor: pointer;
-            }
 
-            .submit-button {
+                
+            }
+    
+            .submiCons {
                 background-color: $verte;
                 color: white;
                 margin-right: 10px;
             }
-
-            .delete-button {
-                background-color: #ccc;
-                color: #333;
-            }
-
-            .submit-button:hover {
+    
+    
+            .submiCons:hover {
                 background-color: #34CB42;
             }
-
-            .delete-button:hover {
-                background-color: #999;
-            }
+    
+            
         }
+
     }
+    
+
+//fin conseil botaniste 
 
     .contenuProfil {
 
         background-color: $verte;
         width: 450px;
-        height: 100vh;
+        //height: 80vh;
+        height: 739px;
 
         p {
             //margin-top: ; une espace en haut du contenu 
@@ -758,19 +1113,31 @@
 
                         //height: 60px;
                         .itemsP {
-                            text-align: none;
+                            //text-align: none;
                             height: 50%;
                             transition: 1s ease text-decoration;
-
-                            &.active {
+                            text-decoration: none;
+                            color: white;
+                            /*&.actives {
                                 color: $grey;
-                            }
+                            }*/
+
+                          
 
                             &:hover {
                                 cursor: pointer;
                                 color: $grey;
                             }
+
+
+                            /*a:active-link{
+                                color: red !important; 
+                            }*/
+
+                            
                         }
+
+                        
                     }
                 }
 
@@ -929,9 +1296,9 @@
                     justify-content: space-between;                
                 }*/
             }
-        }
+        } 
     }
-}
+
 
 .modal-overlay {
     position: fixed;
@@ -985,6 +1352,8 @@
 }
 
 .modifierProfile {
+
+    //background-color: red;
     .modal-overlay {
         position: fixed;
         top: 0;
@@ -1190,7 +1559,7 @@
     }
 }
 
-.parent-container {
+/*.parent-container {
     position: absolute;
     left: 0;
     right: 0;
@@ -1199,17 +1568,11 @@
     display: flex;
     justify-content: center;
     /* Center horizontally */
-    align-items: center;
+    //align-items: center;
     /* Center vertically */
-}
+//}
 
-.contenuProfil .plant-item p {
-    font-size: initial;
-    height: initial;
-    color: initial;
-    margin-bottom: initial;
-    display: flex;
-    align-items: start;
-    justify-content: start;
-    padding: initial;
-}
+
+
+
+    

@@ -51,6 +51,15 @@ function Inscrire (){
         }
       };
      
+
+      //navigation dans inscription 
+
+      function redirectToConnecters() {
+        navigate('/inscrires');
+         }
+
+
+      //fin de navigation dans inscritpion 
         
     return (
         <div className='SectionCon' id='Connexion'>
@@ -123,7 +132,17 @@ function Inscrire (){
                                     </div>
                                     <div className='InsP'>
 
-                                            Vous ne possédez pas de compte ? S'inscrire
+                                        <div className='conCompte'>
+                                             Vous ne possédez pas de compte ? 
+
+                                        </div>
+
+                                        <div className='conInscrire'>
+
+                                            <button className='nodecore' onClick={redirectToConnecters}>S'inscrire</button> 
+
+                                        </div>
+                                           
 
                                     </div>  
                                             

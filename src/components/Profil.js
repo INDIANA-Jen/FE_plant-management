@@ -1,6 +1,8 @@
 import "../style/Profil.scss";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-scroll";
+//import { Link } from "react-scroll";
+import { NavLink } from 'react-router-dom';
+
 import { CgProfile, CgList } from "react-icons/cg";
 import {
     RiPlantLine,
@@ -114,6 +116,7 @@ const SectionProfil = () => {
     };
     // fin modifier Profil
 
+    //Effacer compte
     const deleteAccount = async (id_utilisateur) => {
         try {
             const response = await fetch(
@@ -143,6 +146,7 @@ const SectionProfil = () => {
             console.error("Error:", error);
         }
     };
+    //fin effacer compte
 
     //Recuperer données profil
     const [profilData, setProfilData] = useState(null);
@@ -155,7 +159,7 @@ const SectionProfil = () => {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        'Authorization': localStorage.getItem("token")
+                        'Authorization': localStorage.getItem("token"),
                     },
                 }
             );
@@ -269,23 +273,48 @@ const SectionProfil = () => {
 
     const PlanteSimple = ({ plant }) => {
         return (
-            <div className="plant-item">
-                <img src={plant.photo} alt={plant.nom_plante} height={200} width={200} />
-                <p>Nom: {plant.nom_plante}</p>
-                <p>Type: {plant.type_de_plante}</p>
-                <p>Description: {plant.description}</p>
-                <button className="submit-button" onClick={(event) => {
-                    setPlanteSelectionner((prevState) => ({
-                        ...prevState,
-                        id_plante: plant.id_plante,
-                        nom_plante: plant.nom_plante,
-                        type_de_plante: plant.type_de_plante,
-                        description: plant.description,
-                        photo: plant.photo,
-                    }));
-                    toggleModifierPlante(event);
-                }}>Mise a jour plante</button>
-                <button className="submit-button" onClick={() => deletePlant(plant.id_plante)}>Supprimer la plante</button>
+
+            <div className="plantitem-center">
+                <div className="plant-item">
+                    <div className="imgmesplant">
+                         <img src={plant.photo} alt={plant.name} height={200} width={200}/>
+
+                    </div>
+                    <div className="mesplantnom">
+                        <p>Nom : {plant.nom_plante}</p>
+
+                    </div>
+                    <div className="mesplanttype">
+                        <p>Type : {plant.type_de_plante}</p>
+
+                    </div>
+                    <div className="mesplantedescription">
+                        <p style={{ /*overflowWrap: 'break-word', */
+                                    wordBreak : "break-all",
+                                    width:"300px", /*backgroundColor: "red", */
+                                    margin:'auto',
+                                    display: 'flex',
+                                   
+                                    
+                                    }}>Description : {plant.description}</p>
+                    </div>
+                   
+                    
+                   
+
+                    <div className="deuxmodsup">
+                        <div className="modifbutton">
+                                <button className="submit-button">Modifier</button>
+
+                        </div>
+                        <div className="supbutton">
+                            <button className="delete-button">Supprimer</button>
+
+                        </div>
+                    </div>
+                        
+                    
+                </div>
             </div>
         );
     };
@@ -518,7 +547,7 @@ const SectionProfil = () => {
     //Recuperation des plante disponible a faire garder
     const ListePlantesAGarder = ({ plants }) => {
         return (
-            <div className="plant-list">
+            <div className="plant-liste-garde">
                 {plants.map((plant, index) => (
                     <PlanteSimpleAgarder key={index} plant={plant} />
                 ))}
@@ -528,15 +557,36 @@ const SectionProfil = () => {
 
     const PlanteSimpleAgarder = ({ plant }) => {
         return (
-            <div className="plant-item">
-                <img src={plant.photo} alt={plant.name} height={200} width={200} />
-                <p>Nom: {plant.nom_plante}</p>
-                <p>Type: {plant.type_de_plante}</p>
-                <p>Message: {plant.message_proprietaire}</p>
-                <p>Adresse: {GeocodeCoordinates(plant.latitude_plante, plant.longitude_plante)}</p>
-                <p>Date Début: {plant.date_debut}</p>
-                <p>Date fin: {plant.date_fin}</p>
-                <button className="submit-button" onClick={() => garderCettePlante(localStorage.getItem("id_utilisateur"), plant.id_garderie_plante)}>Garder cette plante</button>
+            <div className="planteListegarde">
+
+                <div className="listrecplant">
+
+                    {/* <img src={plant.photo} alt={plant.name} height={200} width={200} /> */}
+                    <div className="listnom">
+                        <p>Nom : {plant.nom_plante}</p>
+                    </div>
+                    <div className="listprenom">
+                        <p>Type : {plant.type_de_plante}</p>
+                    </div>
+                    <div className="listmessage">
+                        <p>Message : {plant.message_proprietaire}</p>
+                    </div>
+                
+                    {/* <p>Adresse: {GeocodeCoordinates(plant.latitude_plante, plant.longitude_plante)}</p> */}
+                    <div className="listdatedebut">
+                        <p>Date Début : {plant.date_debut}</p>
+                    </div>
+                    <div className="listdatefin">
+                        <p>Date fin : {plant.date_fin}</p>
+
+                    </div>
+                </div>
+
+                <div className="gardenBtnplnate">
+               
+                    <button className="gardenBtn" onClick={() => garderCettePlante(localStorage.getItem("id_utilisateur"), plant.id_garderie_plante)}>Garder cette plante</button>
+                     
+                </div>
             </div>
         );
     };
@@ -607,7 +657,7 @@ const SectionProfil = () => {
     //Plante que je garde
     const ListePlantesQueJeGarde = ({ plants }) => {
         return (
-            <div className="plant-list">
+            <div className="plantlistQgarde">
                 {plants.map((plant, index) => (
                     <PlanteSimpleQueJeGarde key={index} plant={plant} />
                 ))}
@@ -617,19 +667,25 @@ const SectionProfil = () => {
 
     const PlanteSimpleQueJeGarde = ({ plant }) => {
         return (
-            <div className="plant-item">
+            <div className="plantQgarde">
                 <img src={plant.photo} alt={plant.name} height={200} width={200} />
-                <p>Nom: {plant.nom_plante}</p>
-                <p>Type: {plant.type_de_plante}</p>
-                <p>Message: {plant.message_proprietaire}</p>
-                {plant.conseil_botaniste ? (
-                    <p>Conseil Botaniste: {plant.conseil_botaniste}</p>
-                ) : (
-                    <p>Conseil Botaniste: Aucun</p>
-                )
-                }
-                <p>Date Début: {plant.date_debut}</p>
-                <p>Date fin: {plant.date_fin}</p>
+                
+                <div className="contentplantQG">
+                    <p>Nom : {plant.nom_plante}</p>
+                    <p>Type : {plant.type_de_plante}</p>
+                    <p>Message : {plant.message_proprietaire}</p>
+                    {plant.conseil_botaniste ? (
+                        <p>Conseil Botaniste : {plant.conseil_botaniste}</p>
+                    ) : (
+                        <p>Conseil Botaniste : Aucun</p>
+                    )
+                    }
+                    <p>Date Début : {plant.date_debut}</p>
+                    <p>Date fin : {plant.date_fin}</p>
+                </div>
+                <div className="btnentretien">
+                  <button className="Btnsubentre" onClick={() => garderCettePlante(localStorage.getItem("id_utilisateur"), plant.id_garderie_plante)}>Ajouter un entretien</button>
+                </div>
             </div>
         );
     };
@@ -668,7 +724,7 @@ const SectionProfil = () => {
     //Conseil Botaniste
     const ConseilBotaniste = ({ plants }) => {
         return (
-            <div className="plant-list">
+            <div className="plant-listConseil">
                 {plants.map((plant, index) => (
                     <SimpleConseilBotaniste key={index} plant={plant} />
                 ))}
@@ -678,19 +734,67 @@ const SectionProfil = () => {
     const [idGarderiePlante, setIdGarderiePlante] = useState();
     const SimpleConseilBotaniste = ({ plant }) => {
         return (
-            <div className="plant-item">
-                <img src={plant.photo} alt={plant.name} height={200} width={200} />
-                <p>Nom: {plant.nom_plante}</p>
-                <p>Type: {plant.type_de_plante}</p>
-                <p>Message: {plant.message_proprietaire}</p>
-                {plant.conseil_botaniste ? (
-                    <p>Conseil Botaniste: {plant.conseil_botaniste}</p>
-                ) : (
-                    <p>Conseil Botaniste: Aucun</p>
-                )}
-                <p>Date Début: {plant.date_debut}</p>
-                <p>Date fin: {plant.date_fin}</p>
-                <button className="submit-button" onClick={(event) => { toggleConseilBotaniste(event); setIdGarderiePlante(plant.id_garderie_plante); }}>Ajouter un conseil</button>
+            <div className="contenerConsBotan">
+                <div className="conseilBotan">
+                    <div className="imgconsbotans">
+                        <img  src={plant.photo} alt={plant.name} height={200} width={200} />
+
+                    </div>
+                    <div className="consnom">
+                        <p>Nom : {plant.nom_plante}</p>
+
+                    </div>
+                    <div className="constype">
+
+                        <p>Type : {plant.type_de_plante}</p>
+                        
+                    </div>
+                    
+                    <div className="consmessage">
+                        <p style={{ /*overflowWrap: 'break-word', */
+                                    wordBreak : "break-all",
+                                    width:"300px", /*backgroundColor: "red", */
+                                    margin:'auto',
+                                    display: 'flex',
+                                   
+                                    
+                                    }}>Message : {plant.message_proprietaire}</p>
+
+                    </div>
+                   
+                   <div className="consbot">
+                 
+                            {plant.conseil_botaniste ? (
+                                    <p style={{ /*overflowWrap: 'break-word', */
+                                    wordBreak : "break-all",
+                                    width:"300px", /*backgroundColor: "red", */
+                                    margin:'auto',
+                                    display: 'flex',
+                                   
+                                    
+                                    }}>Conseil Botaniste : {plant.conseil_botaniste}</p>
+                            ) : (
+                              <p>Conseil Botaniste : Aucun</p>
+                            )}
+
+                    </div>
+                    <div className="consdateD">
+                        <p>Date Début : {plant.date_debut}</p>
+                        
+                    </div>
+                    <div className="consdateF">
+                         <p>Date fin : {plant.date_fin}</p>
+
+                    </div>
+                    
+                   
+                    
+                </div>
+                <div className="conseilbotanBTN">
+                    <button className="submiCons" onClick={(event) => { toggleConseilBotaniste(event); setIdGarderiePlante(plant.id_garderie_plante); }}>Ajouter un conseil</button>
+
+                </div>
+                    
             </div>
         );
     };
@@ -847,21 +951,33 @@ const SectionProfil = () => {
                 return (
                     <div className="casprofil">
                         <p className="titleprofil"> Profil</p>
-                        <div>
+                        
+                        <div className="contenuchangeP">
                             {profilData ? (
                                 <>
-                                    {profilData.photo ? (
-                                        <img src={`${profilData.photo}`} alt="User's Photo" />
-                                    ) : (
-                                        <img src="logo.png" alt="Default Logo" />
-                                    )}
-                                    <span>Nom: {profilData.nom}</span>
-                                    <span>Prénom: {profilData.prenom}</span>
-                                    <span>Psudo: {profilData.nom_utilisateur}</span>
-                                    <span>email: {profilData.email}</span>
-                                    <span>adresse: {profilData.adresse}</span>
-                                    <span>telephone: {profilData.telephone}</span>
-                                    <span>Type Utilisateur: {profilData.type_utilisateur}</span>
+                                    <div className="photochange">
+
+                                        {profilData.photo ? (
+                                            
+                                            <img className="imgChangephoto" src={`${profilData.photo}`} alt="User's Photo" />
+                                        ) : (
+                                            <img src="logo.png" alt="Default Logo" />
+                                        )}
+
+                                    </div>
+                                   
+                                    <div className="contenentpropchange">
+
+                                        <span>Nom : {profilData.nom}</span>
+                                        <span>Prénom : {profilData.prenom}</span>
+                                        <span>Pseudo : {profilData.nom_utilisateur}</span>
+                                        <span>Email : {profilData.email}</span>
+                                        <span>Adresse : {profilData.adresse}</span>
+                                        <span>Telephone : {profilData.telephone}</span>
+                                        <span>Type utilisateur : {profilData.type_utilisateur}</span>
+
+                                    </div>
+                                   
                                 </>
                             ) : (
                                 <div className="parent-container">
@@ -1037,7 +1153,7 @@ const SectionProfil = () => {
             case "ajouterUnePlante":
                 return (
                     <div className="caseajoutplante">
-                        <p className="titlejoutpante">Ajouter ma plante</p>
+                        <p className="titlejoutpante" >Ajouter une plante</p>
 
                         <div className="contecaseplante">
                             <div className="ajouterplante">
@@ -1082,7 +1198,7 @@ const SectionProfil = () => {
                                     {/*Prenom*/}
 
                                     <div className="nomFirsta">
-                                        <label className="labplant">Type Plante: </label>
+                                        <label className="labplant">Type Plante : </label>
                                         <input
                                             className="contplant"
                                             type="text"
@@ -1095,7 +1211,7 @@ const SectionProfil = () => {
                                     </div>
 
                                     <div className="nomFirsta">
-                                        <label className="labplant">Description: </label>
+                                        <label className="labplant">Description : </label>
                                         <input
                                             className="contplant"
                                             type="text"
@@ -1119,7 +1235,7 @@ const SectionProfil = () => {
             case "mesPlantes":
                 return (
                     <div className="casemesplantes">
-                        <p className="titlemesplantes">Mes Plantes</p>
+                        <p className="titlemesplantes">Mes plantes</p>
                         {loading ? (
                             <div className="parent-container">
                                 <img src="/arosaje-spin.png" className="image-spinner" />
@@ -1220,7 +1336,7 @@ const SectionProfil = () => {
                     <div className="caseajoutplante">
                         <p className="titlejoutpante">Plante que je garde</p>
                         {loadingPlanteQueJeGarde ? (
-                            <div className="parent-container">
+                            <div className="planteQjegardere">
                                 <img src="/arosaje-spin.png" className="image-spinner" />
                             </div>
                         ) : (
@@ -1232,7 +1348,7 @@ const SectionProfil = () => {
             case "ajoutplante":
                 return (
                     <div className="caseajoutplante">
-                        <p className="titlejoutpante">Ajouter plante a faire garder</p>
+                        <p className="titlejoutpante">Ajouter une plante à faire garder</p>
                         {loading ? (
                             <div className="parent-container">
                                 <img src="/arosaje-spin.png" className="image-spinner" />
@@ -1323,7 +1439,7 @@ const SectionProfil = () => {
             case "listplante":
                 return (
                     <div className="caselistplante">
-                        <p>liste des plante</p>
+                        <p className="titlecaselist">Liste de plante disponible à conserver </p>
                         {loadingListPlante ? (
                             <div className="parent-container">
                                 <img src="/arosaje-spin.png" className="image-spinner" />
@@ -1348,7 +1464,7 @@ const SectionProfil = () => {
             case "botanistecons":
                 return (
                     <div className="casebotanistecons">
-                        <p className="titlebota">Botanise</p>
+                        <p className="titlebota">Conseil Botaniste</p>
                         {loadingBotaniste ? (
                             <div className="parent-container">
                                 <img src="/arosaje-spin.png" className="image-spinner" />
@@ -1417,78 +1533,84 @@ const SectionProfil = () => {
                         <li className="nav-item">
                             <div className="icon-link">
                                 <CgProfile color=" white" size={30} />
-                                <Link
+                                <NavLink
                                     className="itemsP"
+                                    /*activeClass="actives"*/
                                     activeClass="actives"
                                     onClick={() => setActiveComponent("profil")}
                                 >
                                     {" "}
                                     Profil
-                                </Link>
+                                </NavLink>
                             </div>
                         </li>
                         <li className="nav-item">
                             <div className="icon-link">
                                 <RiPlantLine color="white" size={30} />
-                                <Link
+                                <NavLink
                                     className="itemsP"
+                                    //activeClass="actives"
                                     activeClass="actives"
                                     onClick={() => setActiveComponent("ajouterUnePlante")}
                                 >
                                     Ajouter une plante
-                                </Link>
+                                </NavLink>
                             </div>
                         </li>
                         <li className="nav-item">
                             <div className="icon-link">
                                 <RiPlantLine color="white" size={30} />
-                                <Link
+                                <NavLink
                                     className="itemsP"
+                                    /*activeClass="actives"*/
                                     activeClass="actives"
                                     onClick={() => setActiveComponent("mesPlantes")}
                                 >
                                     Mes plantes
-                                </Link>
+                                </NavLink>
                             </div>
                         </li>
                         <li className="nav-item">
                             <div className="icon-link">
                                 <FaHands color="white" size={30} />
-                                <Link
+                                <NavLink
                                     className="itemsP"
+                                    /*activeClass="actives"*/
                                     activeClass="actives"
                                     onClick={() => setActiveComponent("plantesGarde")}
                                 >
                                     Plantes que je garde
-                                </Link>
+                                </NavLink>
                             </div>
                         </li>
                         <li className="nav-item">
                             <div className="icon-link">
                                 <RiAddCircleLine color="white" size={30} />
-                                <Link
+                                <NavLink
                                     className="itemsP"
+                                    /*activeClass="actives"*/
                                     activeClass="actives"
                                     onClick={() => setActiveComponent("ajoutplante")}
                                 >
                                     Ajouter une plante à faire garder
-                                </Link>
+                                </NavLink>
                             </div>
                         </li>
                         <li className="nav-item">
                             <div className="icon-link">
                                 <CgList color="white" size={30} />
-                                <Link
+                                <NavLink
                                     className="itemsP"
+                                    /*activeClass="actives"*/
                                     activeClass="actives"
                                     onClick={() => setActiveComponent("listplante")}
                                 >
-                                    liste de plantes disponible à conserver
-                                </Link>
+                                    Liste de plantes disponible à conserver
+                                </NavLink>
                             </div>
                         </li>
 
-                        <div className="mentions">
+                         {/* <div className="mentions">
                             <div className="messagecontpop">
                                 <TiMessages color="white" size={30} />
 
@@ -1524,38 +1646,45 @@ const SectionProfil = () => {
                                     </div>
                                 )}
                             </div>
-                        </div>
+                        </div>  
 
-                        <li className="nav-item">
+                          <li className="nav-item">
                             <div className="icon-link">
                                 <LiaMapSolid color="white" size={30} />
-                                <Link
+                                <NavLink
                                     className="itemsP"
+                                    activeClass="actives" en commentaire
                                     activeClass="actives"
                                     onClick={() => setActiveComponent("mapsclient")}
                                 >
                                     Maps
-                                </Link>
+                                </NavLink>
                             </div>
-                        </li>
+                        </li> */}
                         {localStorage.getItem("type_utilisateur") === "Botaniste" ? (
                             <li className="nav-item">
                                 <div className="icon-link">
                                     <SiHandshake color="white" size={30} />
-                                    <Link
+                                    <NavLink
                                         className="itemsP"
                                         activeClass="actives"
                                         onClick={() => setActiveComponent("botanistecons")}
                                     >
                                         Conseil Botaniste
-                                    </Link>
+                                    </NavLink>
                                 </div>
                             </li>
                         ) : null}
                         <li className="nav-item">
                             <div className="icon-link">
                                 <RiLogoutCircleLine color="white" size={30} />
-                                <Link className="itemsP" onClick={deconnexion}>Déconnecter</Link>
+                                <NavLink 
+                                    className="itemsP" 
+                                    onClick={deconnexion}
+                                    activeClass="actives"
+                                >
+                                    Déconnecter
+                                </NavLink>
                             </div>
                         </li>
                     </ul>

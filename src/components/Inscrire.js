@@ -1,6 +1,12 @@
 import {useState, useEffect} from 'react';
 import '../style/Inscrire.scss';
 import { useNavigate } from 'react-router-dom'
+//import { Link as RouterLink } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
+
+//import { useHistory } from 'react-router-dom';
+
+
 
 
 function Inscrire (){
@@ -58,6 +64,17 @@ function Inscrire (){
         }
       };
 
+      //navgation pour connection
+
+    
+
+        function redirectToConnecters() {
+        navigate('/connecters');
+         }
+
+
+    //fin 
+
     
         
     return (
@@ -67,17 +84,15 @@ function Inscrire (){
             
                 <h1 className='titleIns'>
 
-                <img className="footerLogo1" src="logo.png" alt="gds group"></img>
+                     <img className="footerLogo1" src="logo.png" alt="gds group"></img>
                      
-                    Inscrire 
-
-                    
+                        Inscrire   
 
                 </h1>
                
 
                 <p>
-                    Vous souhaitez vous enregistrer ? Assurez-vous d'insérer les renseignements ci-dessous.
+                    Veuillez entrer les renseignements suivants :
                 </p>
 
                 <div className='FormIns'>
@@ -233,9 +248,46 @@ function Inscrire (){
                                             
                                             
                                         </div>
-                                       
-                                
                                     </form>
+                                    {/*Condition : refus et acceptation */}
+
+                                    <form className='contRadioAR'>
+
+                                        <div className="radioAR">
+
+                                            
+                                                <input className='radAR'
+                                                    type="radio"
+                                                    name= "toppingg"
+                                                    value="accepte"
+                                                    id="optionA"
+                                                    //checked={formVal.type_utilisateur === "normal"}
+                                                    //onChange={handleChange} 
+                                                />
+
+                                                <label htmlFor="optionA" className='labAR'> J'ai lu et j'accepte les conditions générales ainsi que le traitement et l'utilisation de mes données personnelles.</label>
+                                        
+                                                
+                                            
+                                        </div>
+                                        <div className="radioAR">
+                                               
+                                            
+                                                <input className='radAR'
+                                                    type="radio"
+                                                    name= "toppingg"
+                                                    value="refuse"
+                                                    id="optionR"
+                                                    //checked={formVal.type_utilisateur === "Botaniste"}
+                                                   // onChange={handleChange} 
+                                                />
+                                                <label htmlFor="optionR" className='labAR'>J'ai lu et je refuse l'utilisation de mes données personnelle.</label>
+                                            
+                                            
+                                        </div>
+                                    </form>
+
+
                                 <div className='Btn'>
                                     <div className='btns'>
 
@@ -244,11 +296,21 @@ function Inscrire (){
                                             </button>
 
                                     </div>
-                                           
-
+                                    <div className='SconandConnect'>
                                             <div className='Scon'>
-                                                Vous possédez un compte ? Se connecter
-                                            </div>   
+                                                Vous possédez un compte ?  
+                                            </div>  
+                                            <div className='Sconconnect'>
+                                                <button className='nodecoration' onClick={redirectToConnecters}>Se connecter</button>
+                                            
+                                            </div>
+
+                                            {/*<Link  className='items' to="connecters" activeClass='active' >SE CONNECTER</Link >*/}
+                                            
+
+                                    </div>
+                                           
+                                                 
                                 </div> 
 
                                 

@@ -166,9 +166,44 @@
                         .InsP{
                             //background-color: red;
                             position: absolute;
-                            right: 400px;
-                            width: 350px;
-                            //left: 500px;
+                            //right: 500px;
+                            /*width: 350px;*/
+                            //left: 10px;
+                            right:420px;
+
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            //width: 300px;
+                            width: 320px;
+                            //justify-content: space-between;
+
+                            .conCompte{
+
+
+                            }
+
+                            .conInscrire{
+
+                                //color: rgb(65, 65, 232);
+
+                                .nodecore{
+                                    border: none;
+                                    background-color: inherit;
+                                    //padding: 14px 28px;
+                                    font-size: 16px;
+                                    cursor: pointer;
+                                    //display: inline-block;
+                                    color: rgb(65, 65, 232);
+                                }
+
+                                &:hover{
+                                    cursor: pointer;
+                                    color: $verte;
+                                }
+
+
+                            }
                             
                         }
 

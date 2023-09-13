@@ -20,7 +20,7 @@ input[type=number] {
         
          background-color: $greyfon;
          width: 700px; /* La largeur de l’élément */
-         height: 700px; /* La hauteur de l’élément */
+         height: 710px; /* La hauteur de l’élément */
         //background-color: red;
         /* Centrer verticalement et horizontalement */
          position: absolute;
@@ -40,6 +40,7 @@ input[type=number] {
         box-shadow: 1px 1px 5px #CCC;
         border-radius: 3px;
         padding: 10px;
+      
 
        
 
@@ -50,7 +51,11 @@ input[type=number] {
                 //margin-bottom: 30px;
                 text-align: center;
                 //margin-top: 5%;
-                margin-bottom: 10px;
+                //margin-bottom: 3px;
+               
+                //position: relative;
+                //top: 0px;
+             
 
                 .footerLogo1{
 
@@ -67,6 +72,8 @@ input[type=number] {
                 text-align: center;
                 margin-left: auto;
                 margin-right: auto;
+                
+               
             }
 
             .FormIns{
@@ -75,7 +82,8 @@ input[type=number] {
                 width: 670px;
                 margin-left: auto;
                 margin-right: auto;
-                margin-top: 5%;
+                margin-top: 2%;
+                //background-color: red;
                
                 .InsContainer{
 
@@ -125,7 +133,7 @@ input[type=number] {
                         position: relative;
                         left: 80px;
                         .btns{
-                            height: 50px;
+                            height: 45px;
                             button{
                                 color: $white;
                                 background-color: $verte;
@@ -145,12 +153,59 @@ input[type=number] {
                     
                             }
                         }
-                        .Scon{
+
+                        .SconandConnect{
+                            //display: inline-block;
+                            //background-color: red;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            width: 300px;
+                            
+                            
+                          
+                            
+                            .Scon{
+                                //background-color: blue;
+                                //margin-top: 10px;
+
+                                
 
                             
 
-                            //background-color: red;
+                                //background-color: red;
+
+                            }
+    
+                            .Sconconnect{
+                                //margin-top: 0px;
+                                //background-color: blue;
+                               
+
+                                .nodecoration{
+                                    border: none;
+                                    background-color: inherit;
+                                    //padding: 14px 28px;
+                                    font-size: 16px;
+                                    cursor: pointer;
+                                    //display: inline-block;
+                                    color: rgb(65, 65, 232);
+
+                                    //background-color: red;
+                                    
+
+                                }
+
+                                &:hover{
+                                    cursor: pointer;
+                                    color: $verte;
+                                }
+
+    
+                            }
+
                         }
+                       
 
                     }
                     
@@ -166,21 +221,21 @@ input[type=number] {
                         //height: 50px;
 
                         
-                    .radio{
-                        //background-color: red;
-                        //display: inline-block;
-                        width: 150px;
-                        text-align: left;
-                        display: block;
-                        margin-bottom: 10px;
-                       //line-height: 30px;
-                       //position: absolute;
-                        //right: 150px;  
-                        //width: 200px;
-                        //height: 120px;
-                        left: 210px;
+                        .radio{
+                            //background-color: red;
+                            //display: inline-block;
+                            width: 150px;
+                            text-align: left;
+                            display: block;
+                            margin-bottom: 10px;
+                            //line-height: 30px;
+                            //position: absolute;
+                            //right: 150px;  
+                            //width: 200px;
+                            //height: 120px;
+                            left: 210px;
 
-                        position: relative;
+                            position: relative;
 
                         
                         
@@ -198,6 +253,44 @@ input[type=number] {
                     }
 
                         
+                }
+
+                .contRadioAR{
+
+                    .radioAR{
+                        //background-color: red;
+                        //display: inline-block;
+                        width: 600px;
+                        text-align: left;
+                        display: block;
+                        margin-bottom: 10px;
+                        //line-height: 30px;
+                        //position: absolute;
+                        //right: 150px;  
+                        //width: 200px;
+                        //height: 120px;
+                        left: 35px;
+
+                        position: relative;
+
+                        .radAR{
+                            
+                            font-family: system-ui, sans-serif;
+                            font-size: 2rem;
+                            font-weight: bold;
+                            line-height: 1.1;
+
+                           
+                                                        
+                           
+                            
+                        }
+
+                    }
+
+
+
+
                 }
 
                 
