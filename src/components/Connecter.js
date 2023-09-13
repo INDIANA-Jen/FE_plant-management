@@ -31,8 +31,12 @@ function Inscrire (){
             const responseData = await response.json()
 
             if(response.status === 200){
-                localStorage.setItem("id_utilisateur", responseData.donnee.id_utilisateur)
-                navigate('/profils')
+                const bearerToken = "Bearer " + responseData.access_token;
+                localStorage.setItem("id_utilisateur", responseData.id_utilisateur);
+                localStorage.setItem("token", bearerToken);
+                localStorage.setItem("type_utilisateur", responseData.type_utilisateur);
+                console.log(bearerToken);
+                navigate('/profils');
             }
             else if (response.status === 404){
                 alert(responseData.erreur);

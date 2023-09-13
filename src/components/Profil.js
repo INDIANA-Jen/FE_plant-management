@@ -7,15 +7,16 @@ import {
     RiAddCircleLine,
     RiLogoutCircleLine,
 } from "react-icons/ri";
+import { AiTwotoneTool } from 'react-icons/ai'
 import { FaHands } from "react-icons/fa";
 import { TiMessages } from "react-icons/ti";
 import { LiaMapSolid } from "react-icons/lia";
-import { SiHandshake } from "react-icons/si";
+import { SiHandshake, } from "react-icons/si";
 import { HiOutlineX } from "react-icons/hi";
 import { PiPlusFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import GeocodeCoordinates from './convertirGPS';
-
+import MapContainer from "./Map";
 const SectionProfil = () => {
 
     const navigate = useNavigate();
@@ -38,56 +39,77 @@ const SectionProfil = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+    //fonction pour charger une image depuis le PC et la sauvegarder dans une variable
     const modifierPhotoProfil = (e) => {
         const file = e.target.files[0];
 
         if (file) {
-            // Use FileReader to read the selected file
+            // Charger la photo depuis le pc
             const reader = new FileReader();
 
             reader.onloadend = () => {
-                // Set the file data to a state variable for preview
+                // Sauvegarder la photo dans une variable
                 setPhotoPreview(reader.result);
             };
-            // Read the file as a data URL (base64 encoding)
+            // Convertir la photo en base64 pour pourvoir le stocker dans la base de données
             reader.readAsDataURL(file);
         }
     };
 
     const modifierProfil = async (id_utilisateur) => {
-        const donnees = {
-            nom: formData.nom,
-            prenom: formData.prenom,
-            nom_utilisateur: formData.nom_utilisateur,
-            email: formData.email,
-            adresse: formData.adresse,
-            telephone: formData.telephone,
-            photo: photoPreview,
-        };
 
-        try {
-            const response = await fetch(
-                `http://127.0.0.1:8000/mise-a-jour-profil/${id_utilisateur}`,
-                {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(donnees),
-                }
-            );
-
-            const responseData = await response.json();
-
-            if (response.status === 200) {
-                alert(responseData.message);
-            } else if (response.status === 500) {
-                alert(responseData.erreur);
-            } else if (response.status === 400) {
-                alert(responseData.erreur);
+        const donnees = { ...formData };
+        //Cette instruction if vérifie si toutes les entrées sont vides. Si tel est le cas, affichez une erreur.
+        if (Object.values(donnees).every((value) => !value)) {
+            alert('Erreur! Au moins une entrée doit être renseignée');
+        } else {
+            if (formData.nom.trim() === '') {
+                donnees.nom = profilData.nom;
             }
-        } catch (error) {
-            console.error("Error:", error);
+            if (formData.prenom.trim() === '') {
+                donnees.prenom = profilData.prenom;
+            }
+            if (formData.nom_utilisateur.trim() === '') {
+                donnees.nom_utilisateur = profilData.nom_utilisateur;
+            }
+            if (formData.email.trim() === '') {
+                donnees.email = profilData.email;
+            }
+            if (formData.adresse.trim() === '') {
+                donnees.adresse = profilData.adresse;
+            }
+            if (formData.telephone.trim() === '') {
+                donnees.telephone = profilData.telephone;
+            }
+            if (formData.photo === undefined || formData.photo.trim() !== '') {
+                donnees.photo = profilData.photo
+            }
+
+            try {
+                const response = await fetch(
+                    `http://127.0.0.1:8000/mise-a-jour-profil/${id_utilisateur}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Authorization': localStorage.getItem("token")
+                        },
+                        body: JSON.stringify(donnees),
+                    }
+                );
+
+                const responseData = await response.json();
+
+                if (response.status === 200) {
+                    alert(responseData.message);
+                } else if (response.status === 500) {
+                    alert(responseData.erreur);
+                } else if (response.status === 400) {
+                    alert(responseData.erreur);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
         }
     };
     // fin modifier Profil
@@ -100,6 +122,7 @@ const SectionProfil = () => {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                 }
             );
@@ -132,6 +155,7 @@ const SectionProfil = () => {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                 }
             );
@@ -180,6 +204,7 @@ const SectionProfil = () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                     body: JSON.stringify(donnees)
                 }
@@ -200,6 +225,36 @@ const SectionProfil = () => {
     };
     //fin Ajouter une plante
 
+    //Supprimer une plante
+    const deletePlant = async (id_plante) => {
+        try {
+            const response = await fetch(
+                `http://127.0.0.1:8000/supprimer-une-plante/${id_plante}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
+                    },
+                }
+            );
+
+            const responseData = await response.json();
+
+            if (response.status === 200) {
+                alert(responseData.message);
+                window.location.reload();
+            } else if (response.status === 500) {
+                alert(responseData.erreur);
+            } else if (response.status === 400) {
+                alert(responseData.erreur);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
+    //Fin Supprimer une plante
+
     //Recuperer liste de plante de l'utilisateur
 
     const ListePlantes = ({ plants }) => {
@@ -215,12 +270,22 @@ const SectionProfil = () => {
     const PlanteSimple = ({ plant }) => {
         return (
             <div className="plant-item">
-                <img src={plant.photo} alt={plant.name} height={200} width={200} />
+                <img src={plant.photo} alt={plant.nom_plante} height={200} width={200} />
                 <p>Nom: {plant.nom_plante}</p>
                 <p>Type: {plant.type_de_plante}</p>
                 <p>Description: {plant.description}</p>
-                <button className="submit-button">Edit</button>
-                <button className="submit-button">Delete</button>
+                <button className="submit-button" onClick={(event) => {
+                    setPlanteSelectionner((prevState) => ({
+                        ...prevState,
+                        id_plante: plant.id_plante,
+                        nom_plante: plant.nom_plante,
+                        type_de_plante: plant.type_de_plante,
+                        description: plant.description,
+                        photo: plant.photo,
+                    }));
+                    toggleModifierPlante(event);
+                }}>Mise a jour plante</button>
+                <button className="submit-button" onClick={() => deletePlant(plant.id_plante)}>Supprimer la plante</button>
             </div>
         );
     };
@@ -237,6 +302,7 @@ const SectionProfil = () => {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                 }
             );
@@ -257,6 +323,77 @@ const SectionProfil = () => {
         }
     };
     //fin Recuperer liste de plante de l'utilisateur
+
+    //Modification données plante
+    const handlePLantModificationChange = (e) => {
+        const { name, value } = e.target;
+        setPlanteModification({ ...planteModification, [name]: value });
+    };
+
+    //savegarde temporaire des informations de la plante selectionner par l'utilisateur quand il va faire les modifications
+    const [planteSelectionner, setPlanteSelectionner] = useState({
+        id_plante: "",
+        nom_plante: "",
+        type_de_plante: "",
+        description: "",
+        photo: "",
+    });
+
+    //sauvegarde des nouveau informations sur la plante selectionner par l'utilisateur
+    const [planteModification, setPlanteModification] = useState({
+        nom_plante: "",
+        type_de_plante: "",
+        description: "",
+        photo: photoPreview,
+    });
+
+    const modifierPlante = async () => {
+        const donnees = { ...planteModification };
+
+        if (Object.values(donnees).every((value) => !value)) {
+            alert('Erreur! Au moins une entrée doit être renseignée');
+        } else {
+            if (planteModification.nom_plante.trim() === '') {
+                donnees.nom_plante = planteSelectionner.nom_plante;
+            }
+            if (planteModification.type_de_plante.trim() === '') {
+                donnees.type_de_plante = planteSelectionner.type_de_plante;
+            }
+            if (planteModification.description.trim() === '') {
+                donnees.description = planteSelectionner.description;
+            }
+            if (planteModification.photo === undefined || planteModification.photo.trim() !== '') {
+                donnees.photo = planteSelectionner.photo
+            }
+
+            try {
+                const response = await fetch(
+                    `http://127.0.0.1:8000/mise-a-jour-plante/${planteSelectionner.id_plante}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Authorization': localStorage.getItem("token")
+                        },
+                        body: JSON.stringify(donnees),
+                    }
+                );
+
+                const responseData = await response.json();
+
+                if (response.status === 200) {
+                    alert(responseData.message);
+                } else if (response.status === 404) {
+                    alert(responseData.erreur);
+                } else if (response.status === 400) {
+                    alert(responseData.erreur);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+    };
+    //Fin Modification données plante
 
     //Ajouter une plante a faire garder
     const [latitude, setLatitude] = useState(null);
@@ -310,6 +447,7 @@ const SectionProfil = () => {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                 }
             );
@@ -347,6 +485,7 @@ const SectionProfil = () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                     body: JSON.stringify(donnees)
                 }
@@ -368,6 +507,9 @@ const SectionProfil = () => {
 
     //Deconnexion
     const deconnexion = () => {
+        localStorage.removeItem('id_utilisateur');
+        localStorage.removeItem('token');
+        localStorage.removeItem('type_user');
         window.history.replaceState(null, '', window.location.href = '/');
     };
     //fin Deconnexion
@@ -391,7 +533,7 @@ const SectionProfil = () => {
                 <p>Nom: {plant.nom_plante}</p>
                 <p>Type: {plant.type_de_plante}</p>
                 <p>Message: {plant.message_proprietaire}</p>
-                {/* <p>Adresse: {GeocodeCoordinates(plant.latitude_plante, plant.longitude_plante)}</p> */}
+                <p>Adresse: {GeocodeCoordinates(plant.latitude_plante, plant.longitude_plante)}</p>
                 <p>Date Début: {plant.date_debut}</p>
                 <p>Date fin: {plant.date_fin}</p>
                 <button className="submit-button" onClick={() => garderCettePlante(localStorage.getItem("id_utilisateur"), plant.id_garderie_plante)}>Garder cette plante</button>
@@ -411,6 +553,7 @@ const SectionProfil = () => {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                     body: JSON.stringify(donnees),
                 }
@@ -441,6 +584,7 @@ const SectionProfil = () => {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                 }
             );
@@ -486,7 +630,6 @@ const SectionProfil = () => {
                 }
                 <p>Date Début: {plant.date_debut}</p>
                 <p>Date fin: {plant.date_fin}</p>
-                <button className="submit-button" onClick={() => garderCettePlante(localStorage.getItem("id_utilisateur"), plant.id_garderie_plante)}>Ajouter un entretien</button>
             </div>
         );
     };
@@ -502,6 +645,7 @@ const SectionProfil = () => {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                 }
             );
@@ -540,7 +684,7 @@ const SectionProfil = () => {
                 <p>Type: {plant.type_de_plante}</p>
                 <p>Message: {plant.message_proprietaire}</p>
                 {plant.conseil_botaniste ? (
-                        <p>Conseil Botaniste: {plant.conseil_botaniste}</p>
+                    <p>Conseil Botaniste: {plant.conseil_botaniste}</p>
                 ) : (
                     <p>Conseil Botaniste: Aucun</p>
                 )}
@@ -563,6 +707,7 @@ const SectionProfil = () => {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                 }
             );
@@ -602,6 +747,7 @@ const SectionProfil = () => {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': localStorage.getItem("token")
                     },
                     body: JSON.stringify(donnees),
                 }
@@ -619,6 +765,7 @@ const SectionProfil = () => {
         }
     };
     //Fin Conseil Botaniste
+
 
     const [activeComponent, setActiveComponent] = useState("profil"); // Initial active component
 
@@ -651,6 +798,12 @@ const SectionProfil = () => {
     const [supprimerModal, setSupprimerModal] = useState(false);
     const [modifierProfilModal, setModifierProfilModal] = useState(false);
     const [ConseilBotanisteModal, setConseilBotanisteModal] = useState(false);
+    const [modifierPlanteModal, setModifierClassModal] = useState(false);
+
+    const toggleModifierPlante = (event) => {
+        event.preventDefault();
+        setModifierClassModal(!modifierPlanteModal);
+    };
 
     const toggleConseilBotaniste = (event) => {
         event.preventDefault();
@@ -975,6 +1128,91 @@ const SectionProfil = () => {
                             <ListePlantes plants={donneesPlantesUtilisateur} />
                         )
                         }
+                        <div className="modifierPlante">
+                            {modifierPlanteModal && (
+                                <div className="modal-overlay">
+                                    <div className="modal-center">
+                                        <div className="modal-content">
+                                            <h2>Modifier les informations de la plante</h2>
+                                            <div className="scrollable-content">
+                                                <form
+                                                    onSubmit={() =>
+                                                        modifierPlante()
+                                                    }
+                                                >
+                                                    <div className="form-group">
+                                                        <label htmlFor="nom_plante">Nom:</label>
+                                                        <input
+                                                            type="text"
+                                                            id="nom_plante"
+                                                            name="nom_plante"
+                                                            defaultValue={profilData.nom}
+                                                            value={planteModification.nom_plante}
+                                                            onChange={handlePLantModificationChange}
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="type_de_plante">Type de plante:</label>
+                                                        <input
+                                                            type="text"
+                                                            id="type_de_plante"
+                                                            name="type_de_plante"
+                                                            defaultValue={profilData.prenom}
+                                                            value={planteModification.type_de_plante}
+                                                            onChange={handlePLantModificationChange}
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="description">
+                                                            Description:
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            id="description"
+                                                            name="description"
+                                                            defaultValue={profilData.nom_utilisateur}
+                                                            value={planteModification.description}
+                                                            onChange={handlePLantModificationChange}
+                                                        />
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="photo">Photo de profil:</label>
+                                                        <input
+                                                            type="file"
+                                                            id="photo"
+                                                            name="photo"
+                                                            accept="image/*"
+                                                            onChange={modifierPhotoProfil}
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        {photoPreview && (
+                                                            <img
+                                                                src={photoPreview}
+                                                                alt="Preview"
+                                                                className="photo-preview"
+                                                            />
+                                                        )}
+                                                    </div>
+                                                    <div className="modal-buttons">
+                                                        <button className="submit-button" type="submit">
+                                                            Enregistrer
+                                                        </button>
+                                                        <button
+                                                            className="cancel-button"
+                                                            onClick={toggleModifierPlante}
+                                                        >
+                                                            Annuler
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 );
             case "plantesGarde":
@@ -1101,6 +1339,9 @@ const SectionProfil = () => {
                 return (
                     <div className="casemapsclient">
                         <p>maps</p>
+                        <div style={{ height: '400px', width: '100%' }}>
+                            {/* <MapContainer /> */}
+                        </div>
                     </div>
                 );
 
@@ -1297,18 +1538,20 @@ const SectionProfil = () => {
                                 </Link>
                             </div>
                         </li>
-                        <li className="nav-item">
-                            <div className="icon-link">
-                                <SiHandshake color="white" size={30} />
-                                <Link
-                                    className="itemsP"
-                                    activeClass="actives"
-                                    onClick={() => setActiveComponent("botanistecons")}
-                                >
-                                    Conseil Botaniste
-                                </Link>
-                            </div>
-                        </li>
+                        {localStorage.getItem("type_utilisateur") === "Botaniste" ? (
+                            <li className="nav-item">
+                                <div className="icon-link">
+                                    <SiHandshake color="white" size={30} />
+                                    <Link
+                                        className="itemsP"
+                                        activeClass="actives"
+                                        onClick={() => setActiveComponent("botanistecons")}
+                                    >
+                                        Conseil Botaniste
+                                    </Link>
+                                </div>
+                            </li>
+                        ) : null}
                         <li className="nav-item">
                             <div className="icon-link">
                                 <RiLogoutCircleLine color="white" size={30} />
